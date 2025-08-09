@@ -1,4 +1,14 @@
-import type { Metadata } from "next";
+import { type Metadata } from "next";
+import {
+  ClerkProvider,
+  SignedIn,
+  UserButton,
+  // SignInButton,
+  // SignUpButton,
+  // SignedIn,
+  // SignedOut,
+  // UserButton,
+} from "@clerk/nextjs";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -11,8 +21,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
-      <body style={{ margin: 0 }}>{children}</body>
-    </html>
+    <ClerkProvider>
+      <html lang="ja">
+        <body style={{ margin: 0 }}>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
