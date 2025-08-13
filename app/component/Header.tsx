@@ -1,7 +1,6 @@
 "use client";
 import { SignedIn, UserButton } from "@clerk/nextjs";
 import { Box, AppBar, Toolbar, Typography } from "@mui/material";
-import { cp } from "fs";
 
 const Header = () => {
   return (
@@ -10,7 +9,7 @@ const Header = () => {
         elevation={0}
         position="static"
         sx={{
-          bgcolor: "#ffffff",
+          bgcolor: "#FFFFFF",
           borderBottom: 1,
           borderColor: "#CDCECE",
         }}
