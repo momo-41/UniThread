@@ -1,14 +1,6 @@
 import { type Metadata } from "next";
-import {
-  ClerkProvider,
-  SignedIn,
-  UserButton,
-  // SignInButton,
-  // SignUpButton,
-  // SignedIn,
-  // SignedOut,
-  // UserButton,
-} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
+import Header from "./component/Header";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,9 +16,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="ja">
         <body style={{ margin: 0 }}>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
+          <Header />
           {children}
         </body>
       </html>
