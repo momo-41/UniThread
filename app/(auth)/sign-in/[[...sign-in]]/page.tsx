@@ -6,7 +6,7 @@ import { Box } from "@mui/material";
 export default function Page() {
   return (
     <Box
-      height={"100vh"} // alignItemsのcenterを効かせるため
+      height={`calc(100vh - 64px)`} // alignItemsのcenterを効かせるため
       display={"flex"}
       justifyContent={"center"}
       alignItems={"center"}
