@@ -19,7 +19,7 @@ const Header = () => {
             fontSize={{ xs: 20, sm: 22 }}
             fontFamily={"sans-serif"}
             fontWeight={600}
-            sx={{ color: "#1B976C", letterSpacing: 0.5 }}
+            sx={{ color: "#157689", letterSpacing: 0.5 }}
             ml={1}
           >
             UniThread
