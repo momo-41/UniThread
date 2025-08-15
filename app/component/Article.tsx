@@ -14,7 +14,7 @@ import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRound
 
 export type ArticleProps = {
   title: string;
-  body: string; // 本文（\n で改行OK）
+  body: string;
 };
 
 const Article: React.FC<ArticleProps> = ({ title, body }) => {
@@ -22,7 +22,6 @@ const Article: React.FC<ArticleProps> = ({ title, body }) => {
 
   return (
     <Container maxWidth="md" sx={{ py: 3 }}>
-      {/* 戻るボタン（固定遷移） */}
       <Button
         variant="text"
         startIcon={<ArrowBackIosNewRoundedIcon fontSize="small" />}

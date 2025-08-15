@@ -13,7 +13,7 @@ import {
 export type ArticleCardProps = {
   authorName: string;
   title: string;
-  articleId: string | number; // ← これだけでOK
+  articleId: string | number;
 };
 
 const ArticleCard: React.FC<ArticleCardProps> = ({
@@ -23,10 +23,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
 }) => {
   return (
     <Card variant="outlined" sx={{ borderRadius: 2 }}>
-      <CardActionArea
-        component={NextLink}
-        href={`/article/${articleId}`} // ← 常に /article/:id へ
-      >
+      <CardActionArea component={NextLink} href={`/article/${articleId}`}>
         <CardContent>
           <Stack spacing={0.5}>
             <Typography variant="body2" color="text.secondary">

@@ -1,4 +1,3 @@
-// app/article/1/page.tsx
 "use client";
 import Article from "../../component/Article";
 
