@@ -17,7 +17,7 @@ export default function PostButton() {
         textTransform: "none",
         mb: 2,
       }}
-      onClick={() => router.push("/post")}
+      onClick={() => router.push("/article/post")}
     >
       投稿する
     </Button>
