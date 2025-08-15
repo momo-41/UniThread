@@ -5,9 +5,10 @@ import Article from "../../component/Article";
 export default function ArticleDetailPage() {
   return (
     <Article
-      date="2025/8/11"
       title="細胞生化学を落とさないために"
-      text={`2年前期で受講して3単位...（導入文）`}
+      body={`2年前期で受講して3単位...（導入文）\n\n1. 全て出席しよう！そして寝ない！\n出席点が...`}
+      backHref="/article"
+      backLabel="検索に戻る"
     />
   );
 }
