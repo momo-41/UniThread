@@ -4,8 +4,8 @@ import Article from "../../component/Article";
 export default function ArticleDetailPage() {
   return (
     <Article
-      title="細胞生化学を落とさないために"
-      body={`2年前期で受講して3単位...（導入文）\n\n1. 全て出席しよう！そして寝ない！\n出席点が...`}
+      title="[1年生] 初めての期末テストで絶対に確認しておくこと"
+      body={`記事投稿の本文を書く記事投稿の本文を書く記事投稿の本文を書く\n 記事投稿の本文を書く記事投稿の本文を書く記事投稿の本文を書く\n 記事投稿の本文を書く記事投稿の本文を書く記事投稿の本文を書く`}
     />
   );
 }
