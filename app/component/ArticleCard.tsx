@@ -1,7 +1,5 @@
 "use client";
-
 import * as React from "react";
-import NextLink from "next/link";
 import {
   Card,
   CardActionArea,
@@ -9,6 +7,7 @@ import {
   Typography,
   Stack,
 } from "@mui/material";
+import Link from "next/link";
 
 export type ArticleCardProps = {
   authorName: string;
@@ -23,7 +22,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
 }) => {
   return (
     <Card variant="outlined" sx={{ borderRadius: 2 }}>
-      <CardActionArea component={NextLink} href={`/article/${articleId}`}>
+      <CardActionArea component={Link} href={`/article/${articleId}`}>
         <CardContent>
           <Stack spacing={0.5}>
             <Typography variant="body2" color="text.secondary">
