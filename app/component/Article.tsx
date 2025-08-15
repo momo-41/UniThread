@@ -17,7 +17,7 @@ const Article: React.FC<ArticleProps> = ({ title, content }) => {
     <Container maxWidth="md" sx={{ py: 3 }}>
       <Button href="/article">
         <ArrowBackIosNewRoundedIcon fontSize="small" />
-        検索にもどる
+        検索に戻る
       </Button>
 
       <Paper variant="outlined" sx={{ borderRadius: 2, p: { xs: 2, sm: 3 } }}>
