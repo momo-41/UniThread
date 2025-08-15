@@ -2,14 +2,7 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import {
-  Container,
-  Paper,
-  Typography,
-  Divider,
-  Button,
-  Stack,
-} from "@mui/material";
+import { Container, Paper, Typography, Divider, Button } from "@mui/material";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 
 export type ArticleProps = {
