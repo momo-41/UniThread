@@ -5,12 +5,12 @@ import { useRouter } from "next/navigation";
 import { Container, Paper, Typography, Divider, Button } from "@mui/material";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 
-export type ArticleProps = {
+export type ArticleDetailProps = {
   title: string;
   content: string;
 };
 
-const Article: React.FC<ArticleProps> = ({ title, content }) => {
+const ArticleDetail: React.FC<ArticleDetailProps> = ({ title, content }) => {
   const router = useRouter();
 
   return (
@@ -33,4 +33,4 @@ const Article: React.FC<ArticleProps> = ({ title, content }) => {
   );
 };
 
-export default Article;
+export default ArticleDetail;
