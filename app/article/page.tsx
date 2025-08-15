@@ -7,8 +7,9 @@ const ArticlePage = () => {
     <div>
       <PostButton />
       <ArticleCard
-        title={"【1年生】初めての期末テストで絶対に確認しておくこと"}
-        authorName={"みんみん"}
+        authorName="みんみん"
+        title="[1年生] 初めての期末テストで絶対に確認しておくこと"
+        href="/article/1"
       />
     </div>
   );
