@@ -1,4 +1,4 @@
-// components/SimpleArticleCard.tsx
+// app/component/ArticleCard.tsx
 "use client";
 
 import * as React from "react";
@@ -11,34 +11,30 @@ import {
   Stack,
 } from "@mui/material";
 
-type SimpleArticleCardProps = {
+type Props = {
   authorName: string;
   title: string;
   onClick?: () => void;
 };
 
-export default function SimpleArticleCard({
-  authorName,
-  title,
-  onClick,
-}: SimpleArticleCardProps) {
-  const initials = authorName.slice(0, 2);
-
+const ArticleCard: React.FC<Props> = ({ authorName, title, onClick }) => {
   return (
     <Card variant="outlined" sx={{ borderRadius: 2 }}>
       <CardActionArea onClick={onClick}>
         <CardContent>
           <Stack direction="row" spacing={1.5} alignItems="center" mb={1}>
-            <Avatar>{initials}</Avatar>
+            <Avatar />
             <Typography variant="body2" color="text.secondary">
               {authorName}
             </Typography>
           </Stack>
-          <Typography variant="subtitle1" fontWeight="bold">
+          <Typography variant="subtitle1" fontWeight={700}>
             {title}
           </Typography>
         </CardContent>
       </CardActionArea>
     </Card>
   );
-}
+};
+
+export default ArticleCard;
