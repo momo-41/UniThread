@@ -1,6 +1,4 @@
-// app/component/ArticleCard.tsx
 "use client";
-
 import * as React from "react";
 import {
   Card,
@@ -9,21 +7,22 @@ import {
   Typography,
   Stack,
 } from "@mui/material";
+import Link from "next/link";
 
 export type ArticleCardProps = {
   authorName: string;
   title: string;
-  onClick?: () => void;
+  articleId: string;
 };
 
 const ArticleCard: React.FC<ArticleCardProps> = ({
   authorName,
   title,
-  onClick,
+  articleId,
 }) => {
   return (
     <Card variant="outlined" sx={{ borderRadius: 2 }}>
-      <CardActionArea onClick={onClick}>
+      <CardActionArea component={Link} href={`/article/${articleId}`}>
         <CardContent>
           <Stack spacing={0.5}>
             <Typography variant="body2" color="text.secondary">
