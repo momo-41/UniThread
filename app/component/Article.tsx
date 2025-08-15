@@ -7,21 +7,17 @@ import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRound
 
 export type ArticleProps = {
   title: string;
-  body: string;
+  content: string;
 };
 
-const Article: React.FC<ArticleProps> = ({ title, body }) => {
+const Article: React.FC<ArticleProps> = ({ title, content }) => {
   const router = useRouter();
 
   return (
     <Container maxWidth="md" sx={{ py: 3 }}>
-      <Button
-        variant="text"
-        startIcon={<ArrowBackIosNewRoundedIcon fontSize="small" />}
-        sx={{ mb: 1, textTransform: "none" }}
-        onClick={() => router.push("/article")}
-      >
-        検索に戻る
+      <Button href="/article">
+        <ArrowBackIosNewRoundedIcon fontSize="small" />
+        検索にもどる
       </Button>
 
       <Paper variant="outlined" sx={{ borderRadius: 2, p: { xs: 2, sm: 3 } }}>
@@ -30,7 +26,7 @@ const Article: React.FC<ArticleProps> = ({ title, body }) => {
         </Typography>
         <Divider sx={{ mb: 2 }} />
         <Typography variant="body1" sx={{ whiteSpace: "pre-line" }}>
-          {body}
+          {content}
         </Typography>
       </Paper>
     </Container>
