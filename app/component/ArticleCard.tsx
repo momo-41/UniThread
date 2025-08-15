@@ -1,4 +1,3 @@
-// app/component/ArticleCard.tsx
 "use client";
 
 import * as React from "react";
@@ -14,40 +13,31 @@ import {
 export type ArticleCardProps = {
   authorName: string;
   title: string;
-  href?: string; // ★ 追加：リンクで遷移したいとき
-  onClick?: () => void; // hrefが無いとき用のクリックハンドラ
+  articleId: string | number; // ← これだけでOK
 };
 
 const ArticleCard: React.FC<ArticleCardProps> = ({
   authorName,
   title,
-  href,
-  onClick,
+  articleId,
 }) => {
-  const Action = (
-    <CardContent>
-      <Stack spacing={0.5}>
-        <Typography variant="body2" color="text.secondary">
-          {authorName}
-        </Typography>
-        <Typography variant="subtitle1" fontWeight={700}>
-          {title}
-        </Typography>
-      </Stack>
-    </CardContent>
-  );
-
   return (
     <Card variant="outlined" sx={{ borderRadius: 2 }}>
-      {href ? (
-        // ✅ Linkとして遷移（Nextのクライアント遷移）
-        <CardActionArea component={NextLink} href={href}>
-          {Action}
-        </CardActionArea>
-      ) : (
-        // ✅ onClickで遷移したい場合はこちら
-        <CardActionArea onClick={onClick}>{Action}</CardActionArea>
-      )}
+      <CardActionArea
+        component={NextLink}
+        href={`/article/${articleId}`} // ← 常に /article/:id へ
+      >
+        <CardContent>
+          <Stack spacing={0.5}>
+            <Typography variant="body2" color="text.secondary">
+              {authorName}
+            </Typography>
+            <Typography variant="subtitle1" fontWeight={700}>
+              {title}
+            </Typography>
+          </Stack>
+        </CardContent>
+      </CardActionArea>
     </Card>
   );
 };
