@@ -8,24 +8,16 @@ import { useRouter } from "next/navigation";
 export default function PostButton() {
   const router = useRouter();
 
-  const handleClick = () => {
-    router.push("/post");
-  };
-
   return (
     <Button
       variant="contained"
       color="primary"
       sx={{
-        position: "absolute",
-        top: 0,
-        right: 0,
-        mt: 2,
-        mr: 2,
         borderRadius: 2,
         textTransform: "none",
+        mb: 2,
       }}
-      onClick={handleClick}
+      onClick={() => router.push("/post")}
     >
       投稿する
     </Button>
