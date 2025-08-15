@@ -5,7 +5,7 @@ import * as React from "react";
 import { Button } from "@mui/material";
 import { useRouter } from "next/navigation";
 
-const PostButton: React.FC = () => {
+const PostButton = () => {
   const router = useRouter();
 
   return (
