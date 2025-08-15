@@ -12,7 +12,7 @@ import Link from "next/link";
 export type ArticleCardProps = {
   authorName: string;
   title: string;
-  articleId: string | number;
+  articleId: string;
 };
 
 const ArticleCard: React.FC<ArticleCardProps> = ({

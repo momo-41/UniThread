@@ -9,7 +9,7 @@ const ArticlePage = () => {
       <ArticleCard
         authorName="みんみん"
         title="[1年生] 初めての期末テストで絶対に確認しておくこと"
-        articleId={1}
+        articleId={"1"}
       />
     </div>
   );
