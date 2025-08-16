@@ -13,3 +13,79 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Profile {
+  id          String          @id @default(uuid()) @db.Uuid
+  clerkUserId String          @unique // ClerkのuserId
+  handle      String?         @unique // ユーザー名
+  displayName String // 表示用の名前
+  avatarUrl   String?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  articles    Article[]
+  messages    ThreadMessage[]
+  threads     Thread[]
+}
+
+model Course {
+  id             String    @id @default(uuid()) @db.Uuid
+  faculty        String // 学部名
+  department     String? // 学科or専攻名
+  courseName     String // 講義名
+  facultySlug    String // 学部名のスラッグ
+  departmentSlug String    @default("general") // 学科or専攻名のスラッグ
+  courseSlug     String // 講義名のスラッグ
+  courseCode     String? // 講義コード
+  instructor     String? // 教授名
+  createdAt      DateTime  @default(now())
+  threads        Thread[]
+  articles       Article[]
+
+  @@unique([facultySlug, departmentSlug, courseSlug]) //学部スラッグ×学科スラッグ×講義スラッグの組み合わせの「重複」禁止
+  @@index([facultySlug]) //学部で絞る検索を速く
+  @@index([facultySlug, departmentSlug]) //学部＋学科の二段絞りを速く
+}
+
+model Article {
+  id        String   @id @default(uuid()) @db.Uuid
+  authorId  String   @db.Uuid // 下のauthorとセットで1つのリレーション
+  author    Profile  @relation(fields: [authorId], references: [id], onDelete: Restrict)
+  title     String
+  content   String
+  courseId  String?  @db.Uuid
+  course    Course?  @relation(fields: [courseId], references: [id], onDelete: SetNull) // SetNullは講義が消えても記事は残すという意
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([createdAt]) //全体の新着を早く
+  @@index([authorId, createdAt]) //著者別の新着を速く
+  @@index([courseId, createdAt]) //講義別の新着を速く
+}
+
+model Thread {
+  id        String          @id @default(uuid()) @db.Uuid
+  courseId  String?         @db.Uuid
+  course    Course?         @relation(fields: [courseId], references: [id], onDelete: SetNull)
+  createdBy String          @db.Uuid
+  author    Profile         @relation(fields: [createdBy], references: [id], onDelete: Restrict) // 一人のユーザー(Profile)が複数のスレッドを作成できる
+  title     String
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  messages  ThreadMessage[]
+
+  @@index([courseId, updatedAt]) //ある講義のスレッド一覧を更新順で出すのを速く
+}
+
+model ThreadMessage {
+  id        String    @id @default(uuid()) @db.Uuid
+  threadId  String    @db.Uuid
+  thread    Thread    @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  authorId  String    @db.Uuid
+  author    Profile   @relation(fields: [authorId], references: [id], onDelete: Restrict)
+  body      String
+  createdAt DateTime  @default(now())
+  editedAt  DateTime?
+
+  @@index([threadId, createdAt]) //あるスレッドのメッセージを作成時刻順に表示するのを速く
+  @@index([authorId, createdAt]) //あるユーザーの投稿履歴を新着順で速くとる
+}
