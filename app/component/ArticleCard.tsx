@@ -7,6 +7,8 @@ import {
   Typography,
   Stack,
 } from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import PersonIcon from "@mui/icons-material/Person";
 import Link from "next/link";
 
 export type ArticleCardProps = {
@@ -23,6 +25,9 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
   return (
     <Card variant="outlined" sx={{ borderRadius: 2 }}>
       <CardActionArea component={Link} href={`/article/${articleId}`}>
+        <Avatar>
+          <PersonIcon />
+        </Avatar>
         <CardContent>
           <Stack spacing={0.5}>
             <Typography variant="body2" color="text.secondary">

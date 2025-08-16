@@ -1,12 +1,12 @@
 import React from "react";
-import ArticleCard from "../component/ArticleCard";
 import PostButton from "../component/PostButton";
+import ArticleCardList from "../component/ArticleCardList";
 
 const ArticlePage = () => {
   return (
     <div>
       <PostButton />
-      <ArticleCard
+      <ArticleCardList
         authorName="みんみん"
         title="[1年生] 初めての期末テストで絶対に確認しておくこと"
         articleId={"1"}
