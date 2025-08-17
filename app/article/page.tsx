@@ -2,7 +2,11 @@ import React from "react";
 import PostButton from "../component/PostButton";
 import ArticleCardList from "../component/ArticleCardList";
 
-const ArticlePage = () => {
+const ArticlePage = async () => {
+  const response = await fetch("http://localhost:3000/api/article", {
+    cache: "no-store",
+  });
+
   return (
     <div>
       <PostButton />
