@@ -6,7 +6,8 @@ const ArticlePage = async () => {
   const response = await fetch("http://localhost:3000/api/article", {
     cache: "no-store",
   });
-
+  const AllArticlePosts = await response.json();
+  console.log(AllArticlePosts);
   return (
     <div>
       <PostButton />
