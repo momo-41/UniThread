@@ -8,7 +8,6 @@ const FacultyDepartmentCard: React.FC<FacultyDepartmentCardProps> = ({
 }) => {
   return (
     <>
-      {/* {FacultiesData.map((data) => ( */}
       <Link
         key={facultySlug}
         href={`/thread/${facultySlug}`}
@@ -35,7 +34,6 @@ const FacultyDepartmentCard: React.FC<FacultyDepartmentCardProps> = ({
           </Typography>
         </Card>
       </Link>
-      {/* ))} */}
     </>
   );
 };
