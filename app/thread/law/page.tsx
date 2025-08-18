@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <>
-      <div>major in literature</div>
+      <div>major in law</div>
     </>
   );
 }

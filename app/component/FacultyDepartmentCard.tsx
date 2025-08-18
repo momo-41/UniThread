@@ -1,9 +1,17 @@
 import Link from "next/link";
 import { Card, Typography } from "@mui/material";
+import { FacultyDepartmentCardProps } from "@/types/faculties-type";
 
-const FacultyDepartmentCard = () => {
+const FacultyDepartmentCard: React.FC<FacultyDepartmentCardProps> = ({
+  facultyName,
+  facultySlug,
+}) => {
   return (
-    <Link href={"/thread/literature"} style={{ textDecoration: "none" }}>
+    <Link
+      key={facultySlug}
+      href={`/thread/${facultySlug}`}
+      style={{ textDecoration: "none" }}
+    >
       <Card
         sx={{
           width: 220,
@@ -21,7 +29,7 @@ const FacultyDepartmentCard = () => {
           ml={2}
           mt={2}
         >
-          文学部
+          {facultyName}
         </Typography>
       </Card>
     </Link>

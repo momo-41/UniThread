@@ -1,10 +1,10 @@
 import React from "react";
-import FacultyDepartmentCard from "../component/FacultyDepartmentCard";
+import FacultyCardList from "../component/FacultyCardList";
 
 const threadPage = () => {
   return (
     <div>
-      <FacultyDepartmentCard />
+      <FacultyCardList />
     </div>
   );
 };
