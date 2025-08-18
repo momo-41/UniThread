@@ -7,34 +7,32 @@ const FacultyDepartmentCard: React.FC<FacultyDepartmentCardProps> = ({
   facultySlug,
 }) => {
   return (
-    <>
-      <Link
-        key={facultySlug}
-        href={`/thread/${facultySlug}`}
-        style={{ textDecoration: "none" }}
+    <Link
+      key={facultySlug}
+      href={`/thread/${facultySlug}`}
+      style={{ textDecoration: "none" }}
+    >
+      <Card
+        sx={{
+          width: 220,
+          height: 180,
+          transition: "0.3s",
+          "&:hover": {
+            background: "#DCF5F7",
+          },
+        }}
       >
-        <Card
-          sx={{
-            width: 220,
-            height: 180,
-            transition: "0.3s",
-            "&:hover": {
-              background: "#DCF5F7",
-            },
-          }}
+        <Typography
+          fontSize={19}
+          fontWeight={"bold"}
+          color="#383838"
+          ml={2}
+          mt={2}
         >
-          <Typography
-            fontSize={19}
-            fontWeight={"bold"}
-            color="#383838"
-            ml={2}
-            mt={2}
-          >
-            {facultyName}
-          </Typography>
-        </Card>
-      </Link>
-    </>
+          {facultyName}
+        </Typography>
+      </Card>
+    </Link>
   );
 };
 
