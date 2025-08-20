@@ -1,7 +1,12 @@
-export default function Home() {
+import CourseCard from "./component/CourseCard";
+import React from "react";
+
+const page = () => {
   return (
-    <>
-      <div>aaa</div>
-    </>
+    <div>
+      <CourseCard />
+    </div>
   );
-}
+};
+
+export default page;
