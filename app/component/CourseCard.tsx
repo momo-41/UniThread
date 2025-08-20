@@ -1,13 +1,5 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-
-<Box
-  component="span"
-  sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-></Box>;
+import { Card, CardContent, Typography } from "@mui/material";
+import React from "react";
 
 const CourseCard = () => {
   return (
@@ -22,10 +14,7 @@ const CourseCard = () => {
       }}
     >
       <CardContent>
-        <Typography
-          gutterBottom
-          sx={{ color: "#383838", fontSize: 18, fontWeight: "500" }}
-        >
+        <Typography color={"#383838"} fontSize={18} fontWeight={500}>
           講義名講義名
         </Typography>
       </CardContent>

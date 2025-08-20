@@ -1,27 +1,12 @@
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
+import CourseCard from "./component/CourseCard";
 import React from "react";
 
-const threadPage = () => {
+const page = () => {
   return (
-    <Card
-      sx={{
-        width: 300,
-        height: 90,
-        transition: "0.3s",
-        "&:hover": {
-          background: "#DCF5F7",
-        },
-      }}
-    >
-      <CardContent>
-        <Typography color={"#383838"} fontSize={18} fontWeight={500}>
-          講義名講義名
-        </Typography>
-      </CardContent>
-    </Card>
+    <div>
+      <CourseCard />
+    </div>
   );
 };
 
-export default threadPage;
+export default page;
