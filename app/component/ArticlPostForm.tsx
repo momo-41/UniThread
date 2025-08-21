@@ -11,6 +11,7 @@ import {
   Button,
   Typography,
 } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
   title: z.string().min(1, "タイトルは必須です。"),
@@ -19,7 +20,8 @@ const FormSchema = z.object({
 
 type FormValues = z.infer<typeof FormSchema>;
 
-export default function ArticlePostForm() {
+const ArticlePostForm = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -27,13 +29,16 @@ export default function ArticlePostForm() {
     reset,
   } = useForm<FormValues>({ resolver: zodResolver(FormSchema) });
 
-  const onSubmit = async (values: FormValues) => {
+  const createArticle = async (values: FormValues) => {
     const res = await fetch("/api/article", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
     });
-    if (res.ok) reset();
+    if (res.ok) {
+      reset();
+      router.push("/article");
+    }
   };
 
   return (
@@ -41,7 +46,7 @@ export default function ArticlePostForm() {
       <Typography variant="h5" fontWeight={700} sx={{ mb: 2 }}>
         記事の投稿
       </Typography>
-      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+      <Box component="form" onSubmit={handleSubmit(createArticle)}>
         <Stack spacing={2}>
           <TextField
             label="title"
@@ -66,4 +71,6 @@ export default function ArticlePostForm() {
       </Box>
     </Container>
   );
-}
+};
+
+export default ArticlePostForm;
