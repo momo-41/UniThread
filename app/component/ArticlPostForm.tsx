@@ -18,7 +18,7 @@ export default function ArticlePostForm() {
   });
 
   const onSubmit = async (data: FormValues) => {
-    await fetch(`${process.env.APP_URL!}/api/article`, {
+    await fetch("/api/article", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
