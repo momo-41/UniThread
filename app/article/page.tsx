@@ -3,16 +3,15 @@ import PostButton from "../component/PostButton";
 import ArticleCardList from "../component/ArticleCardList";
 import { headers } from "next/headers";
 
+async function getAllArticleposts() {
+  const response = await fetch(`${process.env.APP_URL!}/api/article`, {
+    cache: "no-store",
+    headers: { cookie: (await headers()).get("cookie") ?? "" },
+  });
+  const allArticlePosts = await response.json();
+  return allArticlePosts;
+}
 const ArticlePage = async () => {
-  async function getAllArticleposts() {
-    const response = await fetch(`${process.env.APP_URL!}/api/article`, {
-      cache: "no-store",
-      headers: { cookie: (await headers()).get("cookie") ?? "" },
-    });
-    const allArticlePosts = await response.json();
-    return allArticlePosts;
-  }
-
   const allArticlePosts = await getAllArticleposts();
 
   return (
