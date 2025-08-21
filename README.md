@@ -22,6 +22,9 @@
 ## デプロイリンク
 (デプロイが完了次第、記載する予定です)
 
+## Figma
+https://www.figma.com/design/ZtEOnwVR1v3anFyUw4GBIV/%E5%A4%8F%E5%90%88%E5%AE%BF?node-id=0-1&t=7X94LF1f5WTK5TCo-1
+
 ---
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
