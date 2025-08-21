@@ -13,9 +13,8 @@ import {
 } from "@mui/material";
 
 const FormSchema = z.object({
-  authorId: z.string().uuid(),
-  title: z.string(),
-  content: z.string(),
+  title: z.string().min(1, "タイトルは必須です。"),
+  content: z.string().min(1, "本文は必須です。"),
 });
 
 type FormValues = z.infer<typeof FormSchema>;
@@ -25,14 +24,16 @@ export default function ArticlePostForm() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    reset,
   } = useForm<FormValues>({ resolver: zodResolver(FormSchema) });
 
-  const onSubmit = async (data: FormValues) => {
-    await fetch("/api/article", {
+  const onSubmit = async (values: FormValues) => {
+    const res = await fetch("/api/article", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify(values),
     });
+    if (res.ok) reset();
   };
 
   return (
@@ -40,16 +41,8 @@ export default function ArticlePostForm() {
       <Typography variant="h5" fontWeight={700} sx={{ mb: 2 }}>
         記事の投稿
       </Typography>
-
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={2}>
-          <TextField
-            label="authorId (UUID)"
-            fullWidth
-            {...register("authorId")}
-            error={!!errors.authorId}
-            helperText={errors.authorId?.message}
-          />
           <TextField
             label="title"
             fullWidth
