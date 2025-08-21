@@ -3,6 +3,14 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Container,
+  Box,
+  Stack,
+  TextField,
+  Button,
+  Typography,
+} from "@mui/material";
 
 const FormSchema = z.object({
   authorId: z.string().uuid(),
@@ -13,9 +21,11 @@ const FormSchema = z.object({
 type FormValues = z.infer<typeof FormSchema>;
 
 export default function ArticlePostForm() {
-  const { register, handleSubmit } = useForm<FormValues>({
-    resolver: zodResolver(FormSchema),
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormValues>({ resolver: zodResolver(FormSchema) });
 
   const onSubmit = async (data: FormValues) => {
     await fetch("/api/article", {
@@ -26,20 +36,41 @@ export default function ArticlePostForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label>authorId</label>
-        <input type="text" {...register("authorId")} />
-      </div>
-      <div>
-        <label>title</label>
-        <input type="text" {...register("title")} />
-      </div>
-      <div>
-        <label>content</label>
-        <textarea {...register("content")} />
-      </div>
-      <button type="submit">投稿</button>
-    </form>
+    <Container maxWidth="sm" sx={{ py: 4 }}>
+      <Typography variant="h5" fontWeight={700} sx={{ mb: 2 }}>
+        記事の投稿
+      </Typography>
+
+      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+        <Stack spacing={2}>
+          <TextField
+            label="authorId (UUID)"
+            fullWidth
+            {...register("authorId")}
+            error={!!errors.authorId}
+            helperText={errors.authorId?.message}
+          />
+          <TextField
+            label="title"
+            fullWidth
+            {...register("title")}
+            error={!!errors.title}
+            helperText={errors.title?.message}
+          />
+          <TextField
+            label="content"
+            fullWidth
+            multiline
+            minRows={5}
+            {...register("content")}
+            error={!!errors.content}
+            helperText={errors.content?.message}
+          />
+          <Button type="submit" variant="contained" disabled={isSubmitting}>
+            投稿
+          </Button>
+        </Stack>
+      </Box>
+    </Container>
   );
 }
