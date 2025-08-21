@@ -1,18 +1,24 @@
 import React from "react";
-import ArticleCard, { ArticleCardProps } from "./ArticleCard";
+import ArticleCard from "./ArticleCard";
 import { Stack } from "@mui/material";
 
-const ArticleCardList: React.FC<ArticleCardProps> = (props) => {
-  return (
-    <Stack display="flex" direction="column">
-      <ArticleCard {...props} />
-      <ArticleCard {...props} />
-      <ArticleCard {...props} />
-      <ArticleCard {...props} />
-      <ArticleCard {...props} />
-      <ArticleCard {...props} />
-    </Stack>
-  );
+type ArticleItem = {
+  id: string;
+  title: string;
+  author: { displayName: string };
 };
+
+const ArticleCardList = ({ items }: { items: ArticleItem[] }) => (
+  <Stack direction="column" spacing={2}>
+    {items.map(({ id, title, author }) => (
+      <ArticleCard
+        key={id}
+        authorName={author.displayName}
+        title={title}
+        articleId={id}
+      />
+    ))}
+  </Stack>
+);
 
 export default ArticleCardList;
