@@ -13,3 +13,18 @@ export async function GET(_req: Request) {
 
   return NextResponse.json(allArticlePosts);
 }
+
+export async function POST(req: Request) {
+  const { authorId, title, content, courseId } = await req.json();
+
+  const article = await prisma.article.create({
+    data: {
+      authorId,
+      title,
+      content,
+      courseId: courseId ?? null,
+    },
+  });
+
+  return NextResponse.json(article, { status: 201 });
+}
