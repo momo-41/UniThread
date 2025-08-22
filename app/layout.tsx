@@ -1,6 +1,8 @@
 import { type Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import Header from "./component/Header";
+import { jaJP } from "@clerk/localizations";
+import SubHeader from "./component/SubHeader";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,10 +15,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider localization={jaJP}>
       <html lang="ja">
         <body style={{ margin: 0 }}>
           <Header />
+          <SubHeader/>
           {children}
         </body>
       </html>
