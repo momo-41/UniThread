@@ -6,8 +6,8 @@ import { prisma } from "@/lib/prismaClient";
 export const runtime = "nodejs";
 
 const Body = z.object({
-  title: z.string(),
-  content: z.string(),
+  title: z.string().min(1, "タイトルは必須です。"),
+  content: z.string().min(1, "本文は必須です。"),
   courseId: z.string().uuid().optional().nullable(),
 });
 
