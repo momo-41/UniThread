@@ -17,7 +17,7 @@ export async function GET(_req: Request) {
     select: {
       id: true,
       title: true,
-      author: { select: { displayName: true } },
+      author: { select: { handle: true, displayName: true } },
     },
   });
   return NextResponse.json(allArticlePosts);
