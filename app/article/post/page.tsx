@@ -1,4 +1,4 @@
-import ArticlePostForm from "@/app/component/ArticlPostForm";
+import ArticlePostForm from "@/app/component/ArticlePostForm";
 import { Button } from "@mui/material";
 import React from "react";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
