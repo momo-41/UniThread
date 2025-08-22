@@ -11,6 +11,7 @@ async function getAllArticleposts() {
   const allArticlePosts = await response.json();
   return allArticlePosts;
 }
+
 const ArticlePage = async () => {
   const allArticlePosts = await getAllArticleposts();
 
@@ -22,14 +23,7 @@ const ArticlePage = async () => {
           記事が投稿されていません
         </div>
       ) : (
-        allArticlePosts.map(({ id, title, author }: any) => (
-          <ArticleCardList
-            key={id}
-            authorName={author.displayName}
-            title={title}
-            articleId={id}
-          />
-        ))
+        <ArticleCardList items={allArticlePosts} />
       )}
     </div>
   );
