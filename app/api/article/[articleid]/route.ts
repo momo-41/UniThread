@@ -13,6 +13,7 @@ export async function GET(
       id: true,
       title: true,
       content: true,
+      createdAt: true,
       author: { select: { handle: true, displayName: true } },
     },
   });
