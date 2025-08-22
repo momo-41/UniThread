@@ -14,15 +14,31 @@ function pickDisplayName(data: any) {
 export async function POST(req: Request) {
   const payload = await req.text();
 
+  // Webhookシークレット確認
+  const secret = process.env.CLERK_WEBHOOK_SECRET;
+  if (!secret) {
+    return new Response("Config error: missing CLERK_WEBHOOK_SECRET", {
+      status: 500,
+    });
+  }
+
+  // Svixヘッダ確認
   const svixId = req.headers.get("svix-id");
   const svixTimestamp = req.headers.get("svix-timestamp");
   const svixSignature = req.headers.get("svix-signature");
   if (!svixId || !svixTimestamp || !svixSignature) {
-    return new Response("Missing svix headers", { status: 400 });
+    const missing = [
+      !svixId ? "svix-id" : null,
+      !svixTimestamp ? "svix-timestamp" : null,
+      !svixSignature ? "svix-signature" : null,
+    ]
+      .filter(Boolean)
+      .join(", ");
+    return new Response(`Missing svix headers: ${missing}`, { status: 400 });
   }
 
-  const wh = new Webhook(process.env.CLERK_WEBHOOK_SECRET!);
-
+  // 署名検証
+  const wh = new Webhook(secret);
   let parsed: WebhookEvent;
   try {
     parsed = wh.verify(payload, {
@@ -30,47 +46,52 @@ export async function POST(req: Request) {
       "svix-timestamp": svixTimestamp,
       "svix-signature": svixSignature,
     }) as WebhookEvent;
-  } catch {
-    return new Response("Invalid signature", { status: 400 });
+  } catch (err: any) {
+    return new Response(
+      `Invalid signature: ${err?.message ?? "verify failed"}`, //失敗理由をngrokに表示する
+      { status: 400 }
+    );
   }
 
   if (parsed.type !== "user.created" && parsed.type !== "user.updated") {
-    return new Response("ok", { status: 200 });
+    return new Response(`ignored event: ${parsed.type}`, { status: 200 });
   }
 
-  const user = parsed.data as any; // 実体はClerkのUser
-  const clerkId = user.id as string | undefined;
-  if (!clerkId) return new Response("No user id", { status: 400 });
+  const user = parsed.data as any;
+  const clerkId = user?.id as string | undefined;
+  if (!clerkId)
+    return new Response("No user id in event.data", { status: 400 });
 
   const displayName = pickDisplayName(user);
   const avatarUrl = user.image_url ?? null;
-
   const handle =
     typeof user.username === "string" && user.username.trim()
       ? user.username.trim().toLowerCase()
       : undefined;
 
-  await prisma.profile.upsert({
-    where: { clerkUserId: clerkId },
-    create: {
-      clerkUserId: clerkId,
-      displayName,
-      avatarUrl,
-      ...(handle ? { handle } : {}), // ← 追加
-    },
-    update: {
-      displayName,
-      avatarUrl,
-      // 「Clerkでusernameを変更したらDBも更新したい」場合は↓を有効化
-      ...(handle ? { handle } : {}), // ← 追加（運用方針で外してもOK）
-    },
-  });
-
-  //   await prisma.profile.upsert({
-  //     where: { clerkUserId: clerkId }, // ← ここで string 確定
-  //     create: { clerkUserId: clerkId, displayName, avatarUrl },
-  //     update: { displayName, avatarUrl },
-  //   });
+  try {
+    await prisma.profile.upsert({
+      where: { clerkUserId: clerkId },
+      create: {
+        clerkUserId: clerkId,
+        displayName,
+        avatarUrl,
+        ...(handle ? { handle } : {}),
+      },
+      update: {
+        displayName,
+        avatarUrl,
+        ...(handle ? { handle } : {}),
+      },
+    });
+  } catch (err: any) {
+    return new Response(
+      `DB error (profile.upsert): ${err?.code ?? ""} ${
+        err?.message ?? "unknown"
+      }`,
+      { status: 500 }
+    );
+  }
 
   return new Response("ok", { status: 200 });
 }
