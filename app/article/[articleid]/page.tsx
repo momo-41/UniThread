@@ -23,6 +23,7 @@ export default async function ArticleDetailPage(props: Props) {
       authorName={
         articleDetail.author.handle ?? articleDetail.author.displayName
       }
+      createdAt={articleDetail.createdAt}
     />
   );
 }
