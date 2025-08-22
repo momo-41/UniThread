@@ -1,5 +1,5 @@
+import ArticleDetail from "@/app/component/ArticleDetail";
 import { headers } from "next/headers";
-import ArticleDetail from "../../component/ArticleDetail";
 
 async function getArticleDetailData(id: string) {
   const response = await fetch(`${process.env.APP_URL!}/api/article/${id}`, {
@@ -20,6 +20,9 @@ export default async function ArticleDetailPage(props: Props) {
     <ArticleDetail
       title={articleDetail.title}
       content={articleDetail.content}
+      authorName={
+        articleDetail.author.handle ?? articleDetail.author.displayName
+      }
     />
   );
 }
