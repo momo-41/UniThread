@@ -5,7 +5,7 @@ import { Stack } from "@mui/material";
 type ArticleItem = {
   id: string;
   title: string;
-  author: { displayName: string };
+  author: { handle: string | null; displayName: string };
 };
 
 const ArticleCardList = ({ items }: { items: ArticleItem[] }) => (
@@ -13,7 +13,7 @@ const ArticleCardList = ({ items }: { items: ArticleItem[] }) => (
     {items.map(({ id, title, author }) => (
       <ArticleCard
         key={id}
-        authorName={author.displayName}
+        authorName={author.handle ?? author.displayName}
         title={title}
         articleId={id}
       />
