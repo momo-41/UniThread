@@ -1,6 +1,13 @@
-"use client";
+import { headers } from "next/headers";
 import ArticleDetail from "../../component/ArticleDetail";
-
+async function getArticleDetailData() {
+  const response = await fetch(`${process.env.APP_URL!}/api/article`, {
+    cache: "no-store",
+    headers: { cookie: (await headers()).get("cookie") ?? "" },
+  });
+  const ArticleDetailData = await response.json();
+  return ArticleDetailData;
+}
 export default function ArticleDetailPage() {
   return (
     <ArticleDetail
