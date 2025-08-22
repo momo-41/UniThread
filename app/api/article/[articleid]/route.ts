@@ -3,10 +3,12 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   _req: Request,
-  { params }: { params: { articleid: string } }
+  ctx: { params: Promise<{ articleid: string }> }
 ) {
-  const ArticleDetailData = await prisma.article.findUnique({
-    where: { id: params.articleid },
+  const { articleid } = await ctx.params;
+
+  const data = await prisma.article.findUnique({
+    where: { id: articleid },
     select: {
       id: true,
       title: true,
@@ -15,8 +17,8 @@ export async function GET(
     },
   });
 
-  if (!ArticleDetailData) {
+  if (!data) {
     return NextResponse.json({ message: "Not Found" }, { status: 404 });
   }
-  return NextResponse.json(ArticleDetailData);
+  return NextResponse.json(data);
 }
