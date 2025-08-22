@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 import ArticleDetail from "../../component/ArticleDetail";
-async function getArticleDetailData() {
-  const response = await fetch(`${process.env.APP_URL!}/api/article`, {
+async function getArticleDetailData(id: number) {
+  const response = await fetch(`${process.env.APP_URL!}/api/article/${id}`, {
     cache: "no-store",
     headers: { cookie: (await headers()).get("cookie") ?? "" },
   });
