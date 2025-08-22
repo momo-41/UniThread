@@ -1,8 +1,14 @@
 "use client";
-import { SignedIn, UserButton } from "@clerk/nextjs";
+import { SignedIn, UserButton, useUser } from "@clerk/nextjs";
 import { Box, AppBar, Toolbar, Typography } from "@mui/material";
 
 const Header = () => {
+  const { user } = useUser();
+  const username =
+    user?.username ??
+    user?.primaryEmailAddress?.emailAddress?.split("@")[0] ??
+    "user";
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -26,7 +32,12 @@ const Header = () => {
           </Typography>
           <Box mr={2}>
             <SignedIn>
-              <UserButton />
+              <Box display={"flex"} alignItems={"center"}>
+                <Typography fontWeight={600} color="#157689" mr={1.5}>
+                  {username}
+                </Typography>
+                <UserButton />
+              </Box>
             </SignedIn>
           </Box>
         </Toolbar>
