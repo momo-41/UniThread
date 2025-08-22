@@ -30,7 +30,7 @@ const ArticlePostForm = () => {
     reset,
   } = useForm<FormValues>({ resolver: zodResolver(FormSchema) });
 
-  const CreateAlticle = async (values: FormValues) => {
+  const CreateArticle = async (values: FormValues) => {
     const id = toast.loading("送信しています…");
     try {
       const res = await fetch("/api/article", {
@@ -53,7 +53,7 @@ const ArticlePostForm = () => {
       <Typography variant="h5" fontWeight={700} sx={{ mb: 2 }}>
         記事の投稿
       </Typography>
-      <Box component="form" onSubmit={handleSubmit(CreateAlticle)}>
+      <Box component="form" onSubmit={handleSubmit(CreateArticle)}>
         <Stack spacing={2}>
           <TextField
             label="title"
