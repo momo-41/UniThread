@@ -2,11 +2,13 @@ import ArticleDetail from "@/app/component/ArticleDetail";
 import { cookies } from "next/headers";
 
 async function getArticleDetailData(id: string) {
-  const cookieHeader = cookies().toString();
+  const cookieStore = await cookies();
+  const cookieHeader = cookieStore.toString();
   const response = await fetch(`${process.env.APP_URL!}/api/article/${id}`, {
     cache: "no-store",
     headers: { cookie: cookieHeader },
   });
+
   const articleDetailData = await response.json();
   return articleDetailData;
 }
