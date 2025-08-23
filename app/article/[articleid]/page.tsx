@@ -10,11 +10,11 @@ async function getArticleDetailData(id: string) {
   return articleDetailData;
 }
 
-type Props = { params: { articleid: string } };
+type Props = { params: { articleId: string } };
 
 export default async function ArticleDetailPage(props: Props) {
-  const { articleid } = props.params;
-  const articleDetail = await getArticleDetailData(articleid);
+  const { articleId } = props.params;
+  const articleDetail = await getArticleDetailData(articleId);
 
   return (
     <ArticleDetail
