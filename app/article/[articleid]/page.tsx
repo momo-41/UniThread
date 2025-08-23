@@ -10,9 +10,9 @@ async function getArticleDetailData(id: string) {
   return articleDetailData;
 }
 
-type Props = { params: { articleId: string } };
+type TProps = { params: { articleId: string } };
 
-export default async function ArticleDetailPage(props: Props) {
+export default async function ArticleDetailPage(props: TProps) {
   const { articleId } = props.params;
   const articleDetail = await getArticleDetailData(articleId);
 
