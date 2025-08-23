@@ -1,10 +1,11 @@
 import ArticleDetail from "@/app/component/ArticleDetail";
-import { headers } from "next/headers";
+import { cookies } from "next/headers";
 
 async function getArticleDetailData(id: string) {
+  const cookieHeader = cookies().toString();
   const response = await fetch(`${process.env.APP_URL!}/api/article/${id}`, {
     cache: "no-store",
-    headers: { cookie: (await headers()).get("cookie") ?? "" },
+    headers: { cookie: cookieHeader },
   });
   const articleDetailData = await response.json();
   return articleDetailData;
@@ -12,8 +13,8 @@ async function getArticleDetailData(id: string) {
 
 type TProps = { params: { articleId: string } };
 
-export default async function ArticleDetailPage(props: TProps) {
-  const { articleId } = props.params;
+export default async function ArticleDetailPage({ params }: TProps) {
+  const { articleId } = params;
   const articleDetail = await getArticleDetailData(articleId);
 
   return (
