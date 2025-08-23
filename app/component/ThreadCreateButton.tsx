@@ -5,13 +5,10 @@ const ThreadCreateButton = () => {
     <Button
       variant="contained"
       sx={{
-        backgroundColor: "#32A7B4",
         color: "#FFFFFF",
-        borderRadius: 1,
+        backgroundColor: "#32A7B4",
         fontSize: 14,
-        "&:hover": {
-          backgroundColor: "#32A7B4",
-        },
+        borderRadius: 1,
       }}
     >
       + スレッドを作成
