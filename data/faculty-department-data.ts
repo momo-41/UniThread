@@ -12,7 +12,7 @@ export const FacultyDepartmentsData: FacultyDepartmentDataType[] = [
       { departmentName: "日本文学科", departmentSlug: "japanese-literature" },
       {
         departmentName: "国際文化学科",
-        departmentSlug: "international-cultural-studies",
+        departmentSlug: "international-culture",
       },
       {
         departmentName: "現代社会学科",
@@ -24,17 +24,17 @@ export const FacultyDepartmentsData: FacultyDepartmentDataType[] = [
     facultyName: "法学部",
     facultySlug: "law",
     departments: [
-      { departmentName: "法律学科", departmentSlug: "legal-studies" },
+      { departmentName: "法律学科", departmentSlug: "law" },
       { departmentName: "政治学科", departmentSlug: "political-science" },
     ],
   },
   {
     facultyName: "経営学部",
-    facultySlug: "business-administration",
+    facultySlug: "business",
     departments: [
       {
         departmentName: "総合経営学科",
-        departmentSlug: "integrated-management",
+        departmentSlug: "business-administration",
       },
     ],
   },
@@ -44,7 +44,7 @@ export const FacultyDepartmentsData: FacultyDepartmentDataType[] = [
     departments: [
       {
         departmentName: "経済数理学科",
-        departmentSlug: "mathematical-economics",
+        departmentSlug: "economic-mathematical-science",
       },
       {
         departmentName: "現代経済学科",
@@ -58,7 +58,7 @@ export const FacultyDepartmentsData: FacultyDepartmentDataType[] = [
     departments: [
       {
         departmentName: "データ数理",
-        departmentSlug: "mathematical-data-science",
+        departmentSlug: "data-science",
       },
       {
         departmentName: "コンピュータ科学",
