@@ -7,14 +7,17 @@ export const FacultyDepartmentData: FacultyDepartmentDataType[] = [
     departments: [
       {
         departmentName: "英語英米文学科",
-        departmentSlug: "english_american_literature",
+        departmentSlug: "english-and-american-literature",
       },
-      { departmentName: "日本文学科", departmentSlug: "japanese_literature" },
+      { departmentName: "日本文学科", departmentSlug: "japanese-literature" },
       {
         departmentName: "国際文化学科",
-        departmentSlug: "international_culture",
+        departmentSlug: "international-culture",
       },
-      { departmentName: "現代社会学科", departmentSlug: "modern_society" },
+      {
+        departmentName: "現代社会学科",
+        departmentSlug: "contemporary-sociology",
+      },
     ],
   },
   {
@@ -22,7 +25,7 @@ export const FacultyDepartmentData: FacultyDepartmentDataType[] = [
     facultySlug: "law",
     departments: [
       { departmentName: "法律学科", departmentSlug: "law" },
-      { departmentName: "政治学科", departmentSlug: "politics" },
+      { departmentName: "政治学科", departmentSlug: "political-science" },
     ],
   },
   {
@@ -31,7 +34,7 @@ export const FacultyDepartmentData: FacultyDepartmentDataType[] = [
     departments: [
       {
         departmentName: "総合経営学科",
-        departmentSlug: "department_of_business_management",
+        departmentSlug: "business-administration",
       },
     ],
   },
@@ -41,29 +44,35 @@ export const FacultyDepartmentData: FacultyDepartmentDataType[] = [
     departments: [
       {
         departmentName: "経済数理学科",
-        departmentSlug: "economics_mathematics",
+        departmentSlug: "economic-mathematical-science",
       },
-      { departmentName: "現代経済学科", departmentSlug: "modern_economics" },
+      {
+        departmentName: "現代経済学科",
+        departmentSlug: "contemporary-economics",
+      },
     ],
   },
   {
     facultyName: "理工学部",
-    facultySlug: "science_and_engineering",
+    facultySlug: "science-and-engineering",
     departments: [
-      { departmentName: "データ数理専攻", departmentSlug: "data_mathematics" },
+      {
+        departmentName: "データ数理専攻",
+        departmentSlug: "data-science",
+      },
       {
         departmentName: "コンピュータ科学専攻",
-        departmentSlug: "computer_science",
+        departmentSlug: "computer-science",
       },
       {
         departmentName: "機械システム専攻",
-        departmentSlug: "mechanical_systems",
+        departmentSlug: "mechanical-systems",
       },
       {
         departmentName: "電気電子専攻",
-        departmentSlug: "electrical_electronics",
+        departmentSlug: "electrical-and-electronic",
       },
-      { departmentName: "応用化学専攻", departmentSlug: "applied_chemistry" },
+      { departmentName: "応用化学専攻", departmentSlug: "applied-chemistry" },
     ],
   },
 ];
