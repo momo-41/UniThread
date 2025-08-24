@@ -9,6 +9,7 @@ import {
   Box,
 } from "@mui/material";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
+import { Preview } from "./MarkdownPreview";
 
 export type ArticleDetailProps = {
   title: string;
@@ -48,9 +49,7 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({
           {authorName}
         </Typography>
         <Divider sx={{ mb: 2 }} />
-        <Typography variant="body1" sx={{ whiteSpace: "pre-line" }}>
-          {content}
-        </Typography>
+        <Preview content={content} />
       </Paper>
     </Container>
   );
