@@ -3,11 +3,11 @@ import { Typography } from "@mui/material";
 import { notFound } from "next/navigation";
 
 type TProps = {
-  params: { facultySlug: string; departmentSlug: string };
+  params: Promise<{ facultySlug: string; departmentSlug: string }>;
 };
 
-const departmentPage = ({ params }: TProps) => {
-  const { facultySlug, departmentSlug } = params;
+export default async function DepartmentPage({ params }: TProps) {
+  const { facultySlug, departmentSlug } = await params;
 
   const faculty = FacultyDepartmentsData.find(
     (f) => f.facultySlug === facultySlug
@@ -18,7 +18,6 @@ const departmentPage = ({ params }: TProps) => {
     (d) => d.departmentSlug === departmentSlug
   );
   if (!department) return notFound();
-  // console.log("[departmentSlug]", params.departmentSlug);
 
   return (
     <>
@@ -27,6 +26,4 @@ const departmentPage = ({ params }: TProps) => {
       </Typography>
     </>
   );
-};
-
-export default departmentPage;
+}

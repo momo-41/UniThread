@@ -1,17 +1,12 @@
 import DepartmentsCardList from "@/app/component/DepartmentsCardList";
 
 type TProps = {
-  params: { facultySlug: string };
+  params: Promise<{ facultySlug: string }>;
 };
 
-const facultyPage = ({ params }: TProps) => {
-  const facultySlug = params.facultySlug;
-  console.log("[facultyName]", params.facultySlug);
-  return (
-    <>
-      <DepartmentsCardList facultySlug={facultySlug} />
-    </>
-  );
-};
+export default async function FacultyPage({ params }: TProps) {
+  const { facultySlug } = await params; // ← ここがポイント
+  console.log("[facultyName]", facultySlug);
 
-export default facultyPage;
+  return <DepartmentsCardList facultySlug={facultySlug} />;
+}
