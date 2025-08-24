@@ -21,7 +21,8 @@ const FormSchema = z.object({
   content: z.string().min(1, "本文は必須です。"),
 });
 type FormValues = z.infer<typeof FormSchema>;
-type ArticlePostFormProps = {
+
+export type ArticlePostFormProps = {
   onContentChange?: (value: string) => void;
 };
 
@@ -65,6 +66,7 @@ const ArticlePostForm = ({ onContentChange }: ArticlePostFormProps) => {
       <Typography variant="h5" fontWeight={700} sx={{ mb: 2 }}>
         記事の投稿
       </Typography>
+
       <Box component="form" onSubmit={handleSubmit(CreateArticle)}>
         <Stack spacing={2}>
           <TextField
@@ -74,6 +76,14 @@ const ArticlePostForm = ({ onContentChange }: ArticlePostFormProps) => {
             error={!!errors.title}
             helperText={errors.title?.message}
           />
+
+          <Typography variant="subtitle1" fontWeight={600}>
+            本文（Markdown対応）
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+            下の入力欄に記事内容を記入してください。タイトル・見出し・箇条書きなど
+            Markdown 記法が使えます。右に投稿時のプレビューが表示されます。
+          </Typography>
           <div data-color-mode="light">
             <Controller
               name="content"
@@ -82,13 +92,16 @@ const ArticlePostForm = ({ onContentChange }: ArticlePostFormProps) => {
                 <MDEditor
                   value={field.value}
                   onChange={(v) => {
-                    field.onChange(v ?? "");
-                    onContentChange?.(v ?? "");
+                    const next = v ?? "";
+                    field.onChange(next);
+                    onContentChange?.(next);
                   }}
                   preview="live"
                   height={400}
-                  previewOptions={{
-                    rehypePlugins: [rehypeSanitize],
+                  previewOptions={{ rehypePlugins: [rehypeSanitize] }}
+                  textareaProps={{
+                    placeholder:
+                      "マークダウン例\n（上のツールバーからも使用できます!）\n# タイトル\n##  見出し\n- 箇条書き\n- **強調**",
                   }}
                 />
               )}
