@@ -1,13 +1,11 @@
 import DepartmentsCardList from "@/app/component/DepartmentsCardList";
 import FacultyCardList from "@/app/component/FacultyCardList";
-import React from "react";
-type TProps = {
-  params: { facultySlug: string };
-};
 
-const facultyPage = ({ params }: TProps) => {
-  const facultySlug = params.facultySlug;
-  console.log("[facultyName]", params.facultySlug);
+type TParams = { facultySlug: string };
+
+const FacultyPage = async ({ params }: { params: Promise<TParams> }) => {
+  const { facultySlug } = await params;
+
   return (
     <div>
       <FacultyCardList />
@@ -16,4 +14,4 @@ const facultyPage = ({ params }: TProps) => {
   );
 };
 
-export default facultyPage;
+export default FacultyPage;
