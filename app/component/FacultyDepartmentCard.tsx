@@ -1,17 +1,18 @@
 import Link from "next/link";
 import { Card, Typography } from "@mui/material";
-import { FacultyDepartmentCardProps } from "@/types/faculties-type";
+import { FacultyDepartmentCardProps } from "@/types/faculty-department-types";
 
 const FacultyDepartmentCard: React.FC<FacultyDepartmentCardProps> = ({
   facultyName,
   facultySlug,
+  departmentSlug,
 }) => {
+  const href = departmentSlug
+    ? `/thread/${facultySlug}/${departmentSlug}`
+    : `/thread/${facultySlug}`;
+
   return (
-    <Link
-      key={facultySlug}
-      href={`/thread/${facultySlug}`}
-      style={{ textDecoration: "none" }}
-    >
+    <Link key={href} href={href} style={{ textDecoration: "none" }}>
       <Card
         sx={{
           width: 220,
