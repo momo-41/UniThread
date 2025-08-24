@@ -1,7 +1,7 @@
 import React from "react";
 import FacultyDepartmentCard from "./FacultyDepartmentCard";
-import { FacultiesData } from "@/data/faculties";
 import { Box, Typography } from "@mui/material";
+import { FacultyDepartmentsData } from "@/data/faculty-department-data";
 
 const FacultyCardList = () => {
   return (
@@ -10,7 +10,7 @@ const FacultyCardList = () => {
         受けている講義の学部
       </Typography>
       <Box display={"flex"} justifyContent={"center"}>
-        {FacultiesData.map((data) => (
+        {FacultyDepartmentsData.map((data) => (
           <Box key={data.facultySlug} m={2}>
             <FacultyDepartmentCard
               facultyName={data.facultyName}
