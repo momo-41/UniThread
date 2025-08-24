@@ -28,16 +28,17 @@ model Profile {
 }
 
 model Course {
-  id             String    @id @default(uuid()) @db.Uuid
+  id             String   @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
   faculty        String // 学部名
-  department     String? // 学科or専攻名
+  department     String // 学科or専攻名
   courseName     String // 講義名
   facultySlug    String // 学部名のスラッグ
-  departmentSlug String    @default("general") // 学科or専攻名のスラッグ
-  courseSlug     String // 講義名のスラッグ
+  departmentSlug String // 学科or専攻名のスラッグ
+  courseSlug     String? // 講義名のスラッグ
   courseCode     String? // 講義コード
   instructor     String? // 教授名
   createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @default(now()) @updatedAt
   threads        Thread[]
   articles       Article[]
 
