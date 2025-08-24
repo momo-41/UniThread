@@ -23,3 +23,4 @@ export async function GET(
   }
   return NextResponse.json(data);
 }
+//ディレクトリ名変更のため一旦コメントアウト
