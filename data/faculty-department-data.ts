@@ -1,5 +1,4 @@
-// facultydata(dacultyname,facultyslug,departments(departmentname,departmentslug))
-import { FacultyDepartmentDataType } from "@/types/faculties-type";
+import { FacultyDepartmentDataType } from "@/types/faculty-department-type";
 
 export const FacultyDepartmentData: FacultyDepartmentDataType[] = [
   {
