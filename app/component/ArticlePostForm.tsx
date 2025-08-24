@@ -31,19 +31,23 @@ const ArticlePostForm = () => {
   } = useForm<FormValues>({ resolver: zodResolver(FormSchema) });
 
   const CreateArticle = async (values: FormValues) => {
-    const id = toast.loading("送信しています…");
+    const toastId = toast.loading("送信しています…");
     try {
       const res = await fetch("/api/article", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       });
-      if (!res.ok) throw new Error();
+      if (!res.ok) {
+        const txt = await res.text().catch(() => res.statusText);
+        throw new Error(txt);
+      }
       reset();
-      toast.success("成功しました", { id });
+      toast.success("投稿に成功しました", { id: toastId });
       router.push("/article");
-    } catch {
-      toast.dismiss(id);
+    } catch (error) {
+      toast.error("投稿に失敗しました", { id: toastId });
+      console.error("投稿エラー:", error);
     }
   };
 
