@@ -16,3 +16,7 @@ export type FacultyDepartmentCardProps = {
 };
 
 export type DepartmentsCardListProps = { facultySlug: string };
+
+export type CourseCardProps = {
+  courseName: string;
+};
