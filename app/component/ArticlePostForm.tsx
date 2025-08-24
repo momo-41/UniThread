@@ -1,6 +1,6 @@
 "use client";
-
-import { useForm } from "react-hook-form";
+import dynamic from "next/dynamic";
+import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -13,22 +13,30 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { Toaster, toast } from "react-hot-toast";
+import rehypeSanitize from "rehype-sanitize";
 
+const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 const FormSchema = z.object({
   title: z.string().min(1, "タイトルは必須です。"),
   content: z.string().min(1, "本文は必須です。"),
 });
-
 type FormValues = z.infer<typeof FormSchema>;
+type ArticlePostFormProps = {
+  onContentChange?: (value: string) => void;
+};
 
-const ArticlePostForm = () => {
+const ArticlePostForm = ({ onContentChange }: ArticlePostFormProps) => {
   const router = useRouter();
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    control,
     reset,
-  } = useForm<FormValues>({ resolver: zodResolver(FormSchema) });
+    formState: { errors, isSubmitting },
+  } = useForm<FormValues>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: { title: "", content: "" },
+  });
 
   const CreateArticle = async (values: FormValues) => {
     const toastId = toast.loading("送信しています…");
@@ -60,21 +68,37 @@ const ArticlePostForm = () => {
       <Box component="form" onSubmit={handleSubmit(CreateArticle)}>
         <Stack spacing={2}>
           <TextField
-            label="title"
+            label="タイトル"
             fullWidth
             {...register("title")}
             error={!!errors.title}
             helperText={errors.title?.message}
           />
-          <TextField
-            label="content"
-            fullWidth
-            multiline
-            minRows={5}
-            {...register("content")}
-            error={!!errors.content}
-            helperText={errors.content?.message}
-          />
+          <div data-color-mode="light">
+            <Controller
+              name="content"
+              control={control}
+              render={({ field }) => (
+                <MDEditor
+                  value={field.value}
+                  onChange={(v) => {
+                    field.onChange(v ?? "");
+                    onContentChange?.(v ?? "");
+                  }}
+                  preview="live"
+                  height={400}
+                  previewOptions={{
+                    rehypePlugins: [rehypeSanitize],
+                  }}
+                />
+              )}
+            />
+            {errors.content && (
+              <Typography variant="caption" color="error">
+                {errors.content.message}
+              </Typography>
+            )}
+          </div>
           <Button type="submit" variant="contained" disabled={isSubmitting}>
             投稿
           </Button>
