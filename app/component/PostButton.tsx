@@ -1,20 +1,23 @@
-"use client";
-
-import * as React from "react";
 import { Button } from "@mui/material";
-import { useRouter } from "next/navigation";
 
-const PostButton = () => {
-  const router = useRouter();
+type PostButtonProps = {
+  text: string;
+  href: string;
+};
 
+const PostButton: React.FC<PostButtonProps> = ({ text, href }) => {
   return (
     <Button
       variant="contained"
-      color="primary"
-      sx={{ borderRadius: 2, textTransform: "none", mb: 2 }}
-      onClick={() => router.push("/article/post")}
+      href={href}
+      sx={{
+        color: "#FFFFFF",
+        backgroundColor: "#32A7B4",
+        fontSize: 14,
+        borderRadius: 1,
+      }}
     >
-      投稿する
+      {text}
     </Button>
   );
 };

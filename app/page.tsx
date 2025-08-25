@@ -1,14 +1,19 @@
 import CourseCard from "./component/CourseCard";
 import ThreadCard from "./component/ThreadCard";
-import ThreadCreateButton from "./component/ThreadCreateButton";
+import PostButton from "./component/PostButton";
 import React from "react";
 
 const page = () => {
   return (
     <div>
-      <ThreadCreateButton />
+      <PostButton text={"＋スレッドを作成"} href={"/thread"} />
       <ThreadCard />
-      <CourseCard />
+      <CourseCard
+        courseName={""}
+        facultySlug={""}
+        departmentSlug={""}
+        courseId={""}
+      />
     </div>
   );
 };
