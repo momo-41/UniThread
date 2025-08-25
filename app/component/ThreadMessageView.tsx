@@ -1,8 +1,20 @@
+"use client";
 import { Box, Typography } from "@mui/material";
-import React from "react";
+import { useEffect, useRef } from "react";
 import TestThreadMessage from "./TestThreadMessage";
 
 const ThreadMessageView = () => {
+  const scrollerRef = useRef<HTMLDivElement | null>(null);
+
+  // 初回のマウント時に一番下へスクロール
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    requestAnimationFrame(() => {
+      el.scrollTop = el.scrollHeight;
+    });
+  }, []);
+
   return (
     <Box
       height={"80vh"}
@@ -24,6 +36,7 @@ const ThreadMessageView = () => {
         スレッドのタイトル！
       </Typography>
       <Box
+        ref={scrollerRef}
         display={"flex"}
         flexDirection={"column"}
         gap={1}
