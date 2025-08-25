@@ -2,7 +2,15 @@ import { Avatar, Box, Card, Typography } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import React from "react";
 
-const TestThreadMessage = () => {
+type ThreadMessageProps = {
+  userName: string;
+  threadMessage: string;
+};
+
+const ThreadMessage: React.FC<ThreadMessageProps> = ({
+  userName,
+  threadMessage,
+}) => {
   return (
     <Card
       sx={{
@@ -16,13 +24,11 @@ const TestThreadMessage = () => {
         <Avatar sx={{ width: 24, height: 24 }}>
           <PersonIcon sx={{ fontSize: 20 }} />
         </Avatar>
-        <Typography>momo</Typography>
+        <Typography>{userName}</Typography>
       </Box>
-      <Typography>
-        スレッドのメッセージスレッドのメッセージスレッドのメッセージ
-      </Typography>
+      <Typography>{threadMessage}</Typography>
     </Card>
   );
 };
 
-export default TestThreadMessage;
+export default ThreadMessage;
