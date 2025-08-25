@@ -1,16 +1,16 @@
 import PostButton from "@/app/component/PostButton";
 import React from "react";
-
-type TProps = {
-  params: {
-    facultySlug: string;
-    departmentSlug: string;
-    courseId: string;
-  };
+type Params = {
+  facultySlug: string;
+  departmentSlug: string;
+  courseId: string;
 };
-
-export default function CoursePage({ params }: TProps) {
-  const { facultySlug, departmentSlug, courseId } = params;
+export default async function CoursePage({
+  params,
+}: {
+  params: Promise<Params>;
+}) {
+  const { facultySlug, departmentSlug, courseId } = await params;
 
   return (
     <div>
