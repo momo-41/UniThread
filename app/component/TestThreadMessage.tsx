@@ -7,7 +7,6 @@ const TestThreadMessage = () => {
     <Card
       sx={{
         height: 120,
-        flex: "0 0 auto",
         width: "100%",
         borderRadius: 0,
       }}
