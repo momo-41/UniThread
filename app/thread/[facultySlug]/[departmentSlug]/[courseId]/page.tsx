@@ -1,7 +1,23 @@
+import PostButton from "@/app/component/PostButton";
 import React from "react";
-
-const CoursePage = () => {
-  return <div>CoursePage</div>;
+type Params = {
+  facultySlug: string;
+  departmentSlug: string;
+  courseId: string;
 };
+export default async function CoursePage({
+  params,
+}: {
+  params: Promise<Params>;
+}) {
+  const { facultySlug, departmentSlug, courseId } = await params;
 
-export default CoursePage;
+  return (
+    <div>
+      <PostButton
+        text="投稿する"
+        href={`/thread/${facultySlug}/${departmentSlug}/${courseId}/post`}
+      />
+    </div>
+  );
+}

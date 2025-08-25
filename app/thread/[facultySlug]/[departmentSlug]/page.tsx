@@ -1,31 +1,14 @@
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { FacultyDepartmentData } from "@/data/faculty-department-data";
 import CourseCardList from "@/app/component/CourseCardList";
+import { getCourseData as fetchCourseData } from "@/lib/server/get-course-data";
 
 type TProps = {
   params: Promise<{ facultySlug: string; departmentSlug: string }>;
 };
 
 async function getCourseData(facultySlug: string, departmentSlug: string) {
-  const url =
-    `${process.env.APP_URL!}/api/courses?` +
-    `facultySlug=${encodeURIComponent(facultySlug)}` +
-    `&departmentSlug=${encodeURIComponent(departmentSlug)}`;
-
-  const cookieHeader = (await cookies()).toString();
-
-  const response = await fetch(url, {
-    cache: "no-store",
-    headers: { cookie: cookieHeader },
-  });
-
-  if (!response.ok) {
-    const text = await response.text().catch(() => ""); //エラーが起きた時に正確にエラーメッセージを取得するために追加
-    throw new Error(`Failed to fetch courses: ${response.status} ${text}`); // API側のエラーメッセージをログに残すために追加
-  }
-
-  return response.json();
+  return fetchCourseData(facultySlug, departmentSlug);
 }
 
 export default async function CoursesPage({ params }: TProps) {
