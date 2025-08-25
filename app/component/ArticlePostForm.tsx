@@ -83,6 +83,7 @@ const ArticlePostForm = ({ onContentChange }: ArticlePostFormProps) => {
           <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
             下の入力欄に記事内容を記入してください。タイトル・見出し・箇条書きなど
             Markdown 記法が使えます。右に投稿時のプレビューが表示されます。
+            ツールバーの右のボタンからプレビューの表示を切り替えられます。
           </Typography>
           <div data-color-mode="light">
             <Controller
