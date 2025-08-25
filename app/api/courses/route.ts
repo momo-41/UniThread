@@ -10,8 +10,6 @@ export async function GET(req: Request) {
   const facultySlug = searchParams.get("facultySlug");
   const departmentSlug = searchParams.get("departmentSlug");
 
-  console.log("[/api/courses] query", { facultySlug, departmentSlug });
-
   if (!facultySlug || !departmentSlug) {
     return NextResponse.json(
       { error: "facultySlug and departmentSlug are required" },
