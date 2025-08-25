@@ -4,6 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Box, Stack, TextField, Button, Typography } from "@mui/material";
+import { Toaster, toast } from "react-hot-toast";
 
 const FormSchema = z.object({
   title: z
@@ -18,7 +19,6 @@ type Props = {
   courseId: string;
   course: { id: string; courseName?: string };
 };
-
 export default function ThreadPostForm({
   facultySlug,
   departmentSlug,
@@ -33,24 +33,32 @@ export default function ThreadPostForm({
     formState: { errors, isSubmitting },
     reset,
   } = useForm<FormValues>({ resolver: zodResolver(FormSchema) });
+
   const titleVal = watch("title") ?? "";
   const remain = 30 - titleVal.length;
   const courseLabel = course.courseName ?? course.id;
   async function onSubmit(values: FormValues) {
-    const res = await fetch("/api/threads", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title: values.title, courseId }),
-    });
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok || !data?.id) {
-      alert(data?.message ?? `Failed: ${res.status}`);
-      return;
+    const toastId = toast.loading("作成中…");
+    try {
+      const res = await fetch("/api/threads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title: values.title, courseId }),
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || !data?.id) {
+        toast.error(data?.message ?? `Failed: ${res.status}`, { id: toastId });
+        return;
+      }
+      reset();
+      toast.success("スレッドを作成しました", { id: toastId });
+      const listDest = `/thread/${facultySlug}/${departmentSlug}/${courseId}`;
+      router.replace(listDest);
+      router.refresh();
+    } catch {
+      toast.error("ネットワークエラー", { id: toastId });
     }
-    reset();
-    const listDest = `/thread/${facultySlug}/${departmentSlug}/${courseId}`;
-    router.replace(listDest);
-    router.refresh();
   }
 
   return (
@@ -62,12 +70,14 @@ export default function ThreadPostForm({
       maxWidth={720}
       mx="auto"
     >
+      <Toaster position="top-center" />
       <Typography variant="h5" fontWeight="bold" mb={2}>
         スレッド作成
       </Typography>
       <Typography variant="body2" color="text.secondary" mb={3}>
         コース: {courseLabel}
       </Typography>
+
       <TextField
         label="タイトル（30文字まで）"
         placeholder="例）第1回講義の課題について"
@@ -84,12 +94,15 @@ export default function ThreadPostForm({
             transition: "border-color 100ms",
           },
           "&:hover .MuiOutlinedInput-notchedOutline, & .Mui-focused .MuiOutlinedInput-notchedOutline":
-            { borderColor: "primary.main" },
+            {
+              borderColor: "primary.main",
+            },
         }}
       />
+
       <Stack direction="row" gap={1}>
         <Button type="submit" variant="contained" disabled={isSubmitting}>
-          {isSubmitting ? "作成中…" : "スレッドを作成"}
+          スレッドを作成
         </Button>
         <Button
           type="button"
