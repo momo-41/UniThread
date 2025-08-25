@@ -2,6 +2,7 @@
 import { Box, Typography } from "@mui/material";
 import { useEffect, useRef } from "react";
 import TestThreadMessage from "./TestThreadMessage";
+import ThreadMessagePostField from "./ThreadMessagePostField";
 
 const ThreadMessageView = () => {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
@@ -52,6 +53,9 @@ const ThreadMessageView = () => {
         <TestThreadMessage />
         <TestThreadMessage />
         <TestThreadMessage />
+      </Box>
+      <Box p={2} borderTop={1} borderColor={"#CCCCCC"}>
+        <ThreadMessagePostField />
       </Box>
     </Box>
   );
