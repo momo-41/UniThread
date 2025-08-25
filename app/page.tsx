@@ -8,7 +8,12 @@ const page = () => {
     <div>
       <ThreadCreateButton />
       <ThreadCard />
-      <CourseCard />
+      <CourseCard
+        courseName={""}
+        facultySlug={""}
+        departmentSlug={""}
+        courseId={""}
+      />
     </div>
   );
 };
