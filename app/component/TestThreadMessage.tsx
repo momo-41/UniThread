@@ -8,6 +8,7 @@ const TestThreadMessage = () => {
       sx={{
         height: 120,
         width: "100%",
+        flex: "0 0 auto", // Cardの大きさを可変的にしないために必須
         borderRadius: 0,
       }}
     >
