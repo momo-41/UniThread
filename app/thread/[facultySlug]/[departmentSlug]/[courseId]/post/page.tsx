@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { prisma } from "@/lib/prismaClient"; // named exportなら { prisma } に
+import { prisma } from "@/lib/prismaClient";
 import ThreadPostForm from "@/app/component/ThreadPostForm";
 
 export default async function Page({
