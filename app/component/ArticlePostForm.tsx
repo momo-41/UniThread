@@ -25,7 +25,6 @@ type FormValues = z.infer<typeof FormSchema>;
 export type ArticlePostFormProps = {
   onContentChange?: (value: string) => void;
 };
-
 const ArticlePostForm = ({ onContentChange }: ArticlePostFormProps) => {
   const router = useRouter();
   const {
@@ -61,7 +60,7 @@ const ArticlePostForm = ({ onContentChange }: ArticlePostFormProps) => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ py: 4 }}>
+    <Container maxWidth={false} sx={{ maxWidth: "1100px", py: 4 }}>
       <Toaster position="top-center" />
       <Typography variant="h5" fontWeight={700} sx={{ mb: 2 }}>
         記事の投稿
@@ -121,5 +120,4 @@ const ArticlePostForm = ({ onContentChange }: ArticlePostFormProps) => {
     </Container>
   );
 };
-
 export default ArticlePostForm;
