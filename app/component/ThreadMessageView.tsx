@@ -1,10 +1,16 @@
 "use client";
 import { Box, Typography } from "@mui/material";
 import { useEffect, useRef } from "react";
-import TestThreadMessage from "./TestThreadMessage";
 import ThreadMessagePostField from "./ThreadMessagePostField";
+import ThreadMessageList from "./ThreadMessageList";
 
-const ThreadMessageView = () => {
+export type ThreadMessageItem = {
+  id: string;
+  userName: string;
+  threadMessage: string;
+};
+
+const ThreadMessageView = ({ items }: { items: ThreadMessageItem[] }) => {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
 
   // 初回のマウント時に一番下へスクロール
@@ -43,16 +49,7 @@ const ThreadMessageView = () => {
         gap={1}
         sx={{ overflowY: "auto", overflowX: "hidden" }}
       >
-        <TestThreadMessage />
-        <TestThreadMessage />
-        <TestThreadMessage />
-        <TestThreadMessage />
-        <TestThreadMessage />
-        <TestThreadMessage />
-        <TestThreadMessage />
-        <TestThreadMessage />
-        <TestThreadMessage />
-        <TestThreadMessage />
+        <ThreadMessageList items={items} />
       </Box>
       <Box p={2} borderTop={1} borderColor={"#CCCCCC"}>
         <ThreadMessagePostField />

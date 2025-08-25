@@ -7,7 +7,7 @@ const CoursePage = () => {
     <Box display={"flex"} justifyContent={"space-between"}>
       <Box>講義名講義名のスレッド</Box>
       <Box my={2} mr={8}>
-        <ThreadMessageView />
+        <ThreadMessageView items={[]} />
       </Box>
     </Box>
   );
