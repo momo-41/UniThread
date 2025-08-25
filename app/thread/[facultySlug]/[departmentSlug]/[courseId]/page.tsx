@@ -1,7 +1,23 @@
+import PostButton from "@/app/component/PostButton";
 import React from "react";
 
-const CoursePage = () => {
-  return <div>CoursePage</div>;
+type TProps = {
+  params: {
+    facultySlug: string;
+    departmentSlug: string;
+    courseId: string;
+  };
 };
 
-export default CoursePage;
+export default function CoursePage({ params }: TProps) {
+  const { facultySlug, departmentSlug, courseId } = params;
+
+  return (
+    <div>
+      <PostButton
+        text="投稿する"
+        href={`/thread/${facultySlug}/${departmentSlug}/${courseId}/post`}
+      />
+    </div>
+  );
+}
