@@ -78,7 +78,14 @@ export default function ThreadPostForm({
         fullWidth
         required
         autoFocus
-        sx={{ mb: 2 }}
+        sx={{
+          mb: 2,
+          "& .MuiOutlinedInput-notchedOutline": {
+            transition: "border-color 100ms",
+          },
+          "&:hover .MuiOutlinedInput-notchedOutline, & .Mui-focused .MuiOutlinedInput-notchedOutline":
+            { borderColor: "primary.main" },
+        }}
       />
       <Stack direction="row" gap={1}>
         <Button type="submit" variant="contained" disabled={isSubmitting}>
