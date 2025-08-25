@@ -29,51 +29,55 @@ export default function ThreadPostForm({
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isSubmitting },
+    reset,
   } = useForm<FormValues>({ resolver: zodResolver(FormSchema) });
-
+  const titleVal = watch("title") ?? "";
+  const remain = 30 - titleVal.length;
+  const courseLabel = course.courseName ?? course.id;
   async function onSubmit(values: FormValues) {
-    const res = await fetch("/api/thread", {
+    const res = await fetch("/api/threads", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title: values.title, courseId }),
     });
     const data = await res.json().catch(() => ({}));
-    if (!res.ok) throw new Error(data?.message ?? `Failed: ${res.status}`);
-    router.push(
-      `/thread/${facultySlug}/${departmentSlug}/${courseId}/${data.id}`
-    );
+    if (!res.ok || !data?.id) {
+      alert(data?.message ?? `Failed: ${res.status}`);
+      return;
+    }
+    reset();
+    const listDest = `/thread/${facultySlug}/${departmentSlug}/${courseId}`;
+    router.replace(listDest);
+    router.refresh();
   }
 
   return (
     <Box
+      component="form"
+      onSubmit={handleSubmit(onSubmit)}
+      noValidate
       p={3}
       maxWidth={720}
       mx="auto"
-      component="form"
-      onSubmit={handleSubmit(async (v) => {
-        try {
-          await onSubmit(v);
-        } catch (e: any) {
-          alert(e.message ?? "作成に失敗しました");
-        }
-      })}
-      noValidate
     >
       <Typography variant="h5" fontWeight="bold" mb={2}>
         スレッド作成
       </Typography>
       <Typography variant="body2" color="text.secondary" mb={3}>
-        コース: {course?.courseName ?? course?.id}
+        コース: {courseLabel}
       </Typography>
       <TextField
         label="タイトル（30文字まで）"
         placeholder="例）第1回講義の課題について"
         {...register("title")}
         error={!!errors.title}
-        helperText={errors.title?.message}
+        helperText={errors.title?.message ?? `残り ${remain} 文字`}
         inputProps={{ maxLength: 30 }}
         fullWidth
+        required
+        autoFocus
         sx={{ mb: 2 }}
       />
       <Stack direction="row" gap={1}>
