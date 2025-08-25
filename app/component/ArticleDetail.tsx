@@ -31,7 +31,7 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({
   });
 
   return (
-    <Container maxWidth="md" sx={{ py: 3 }}>
+    <Container maxWidth={false} sx={{ maxWidth: "1100px", py: 4 }}>
       <Button href="/article" sx={{ mb: 2 }}>
         <ArrowBackIosNewRoundedIcon fontSize="small" />
         検索に戻る
