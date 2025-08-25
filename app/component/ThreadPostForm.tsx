@@ -13,18 +13,19 @@ const FormSchema = z.object({
     .max(30, "タイトルは30文字以内で入力してください。"),
 });
 type FormValues = z.infer<typeof FormSchema>;
-type Props = {
+type ThreadPostFormProps = {
   facultySlug: string;
   departmentSlug: string;
   courseId: string;
   course: { id: string; courseName?: string };
 };
-export default function ThreadPostForm({
+
+const ThreadPostForm = ({
   facultySlug,
   departmentSlug,
   courseId,
   course,
-}: Props) {
+}: ThreadPostFormProps) => {
   const router = useRouter();
   const {
     register,
@@ -37,6 +38,7 @@ export default function ThreadPostForm({
   const titleVal = watch("title") ?? "";
   const remain = 30 - titleVal.length;
   const courseLabel = course.courseName ?? course.id;
+
   async function onSubmit(values: FormValues) {
     const toastId = toast.loading("作成中…");
     try {
@@ -45,7 +47,7 @@ export default function ThreadPostForm({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title: values.title, courseId }),
       });
-      const data = await res.json().catch(() => ({}));
+      const data = await res.json().catch(() => ({} as any));
 
       if (!res.ok || !data?.id) {
         toast.error(data?.message ?? `Failed: ${res.status}`, { id: toastId });
@@ -77,7 +79,6 @@ export default function ThreadPostForm({
       <Typography variant="body2" color="text.secondary" mb={3}>
         コース: {courseLabel}
       </Typography>
-
       <TextField
         label="タイトル（30文字まで）"
         placeholder="例）第1回講義の課題について"
@@ -99,7 +100,6 @@ export default function ThreadPostForm({
             },
         }}
       />
-
       <Stack direction="row" gap={1}>
         <Button type="submit" variant="contained" disabled={isSubmitting}>
           スレッドを作成
@@ -115,4 +115,6 @@ export default function ThreadPostForm({
       </Stack>
     </Box>
   );
-}
+};
+
+export default ThreadPostForm;
