@@ -1,0 +1,48 @@
+import { Typography } from "@mui/material";
+import CourseCard from "@/app/component/CourseCard";
+
+type Course = { id: string; courseName: string; courseSlug: string | null };
+
+type CourseCardListProps = {
+  departmentName: string;
+  courses: Course[];
+  facultySlug: string;
+  departmentSlug: string;
+};
+
+const CourseCardList = ({
+  departmentName,
+  courses,
+  facultySlug,
+  departmentSlug,
+}: CourseCardListProps) => {
+  const isEmpty = !courses || courses.length === 0;
+
+  return (
+    <>
+      <Typography variant="h6" sx={{ mb: 2 }}>
+        {departmentName}の講義一覧
+      </Typography>
+
+      {isEmpty ? (
+        <Typography variant="body2" color="text.secondary">
+          講義が見つかりませんでした。
+        </Typography>
+      ) : (
+        <>
+          {courses.map((course) => (
+            <CourseCard
+              key={course.id}
+              courseName={course.courseName}
+              facultySlug={facultySlug}
+              departmentSlug={departmentSlug}
+              courseId={course.id}
+            />
+          ))}
+        </>
+      )}
+    </>
+  );
+};
+
+export default CourseCardList;

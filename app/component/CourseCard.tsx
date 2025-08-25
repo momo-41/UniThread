@@ -1,24 +1,39 @@
 import { Card, CardContent, Typography } from "@mui/material";
-import React from "react";
+import Link from "next/link";
 
-const CourseCard = () => {
+type CourseCardProps = {
+  courseName: string;
+  facultySlug: string;
+  departmentSlug: string;
+  courseId: string;
+};
+
+const CourseCard: React.FC<CourseCardProps> = ({
+  courseName,
+  facultySlug,
+  departmentSlug,
+  courseId,
+}) => {
   return (
-    <Card
-      sx={{
-        width: 300,
-        height: 90,
-        transition: "0.3s",
-        "&:hover": {
-          background: "#DCF5F7",
-        },
-      }}
+    <Link
+      href={`/thread/${facultySlug}/${departmentSlug}/${courseId}`}
+      style={{ textDecoration: "none" }}
     >
-      <CardContent>
-        <Typography color={"#383838"} fontSize={18} fontWeight={500}>
-          講義名講義名
-        </Typography>
-      </CardContent>
-    </Card>
+      <Card
+        sx={{
+          width: 300,
+          height: 90,
+          transition: "0.3s",
+          "&:hover": { background: "#DCF5F7" },
+        }}
+      >
+        <CardContent>
+          <Typography color="#383838" fontSize={18} fontWeight={500}>
+            {courseName}
+          </Typography>
+        </CardContent>
+      </Card>
+    </Link>
   );
 };
 
