@@ -3,7 +3,7 @@ import ThreadCardList from "@/app/component/ThreadCardList";
 import { headers } from "next/headers";
 import React from "react";
 import ThreadMessageView from "@/app/component/ThreadMessageView";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 type Params = {
   facultySlug: string;
@@ -39,9 +39,11 @@ export default async function CoursePage({
   const { facultySlug, departmentSlug, courseId } = await params;
   const threads = await getAllThreads(courseId);
   return (
-    <Box display={"flex"} justifyContent={"space-between"}>
-      <Box fontSize={20} fontWeight={500} mt={2} ml={5}>
-        <div>講義名講義名のスレッド</div>
+    <Box display={"flex"} justifyContent={"space-between"} mt={2} ml={5}>
+      <Box>
+        <Typography fontSize={20} fontWeight={500} color={"#444444"}>
+          講義名講義名のスレッド
+        </Typography>
         <Box mt={2}>
           <PostButton
             text="+ スレッドを作成"
@@ -49,7 +51,7 @@ export default async function CoursePage({
           />
         </Box>
         {threads.length === 0 ? (
-          <div style={{ padding: 8, color: "#666" }}>
+          <div style={{ padding: 8, color: "#444444" }}>
             スレッドはまだありません
           </div>
         ) : (
