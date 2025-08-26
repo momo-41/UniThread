@@ -24,8 +24,9 @@ const ThreadMessageView = ({ items }: { items: ThreadMessageItem[] }) => {
 
   return (
     <Box
+      mr={4}
       height={"80vh"}
-      width={"60vw"}
+      width={"57vw"}
       display={"flex"}
       flexDirection={"column"}
       border={1}
@@ -33,8 +34,9 @@ const ThreadMessageView = ({ items }: { items: ThreadMessageItem[] }) => {
       borderColor={"#CCCCCC"}
     >
       <Typography
-        p={2}
-        fontSize={22}
+        p={1}
+        ml={1}
+        fontSize={18}
         fontWeight={600}
         color="#3C3C3C"
         borderBottom={1}

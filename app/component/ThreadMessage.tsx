@@ -14,19 +14,22 @@ const ThreadMessage: React.FC<ThreadMessageProps> = ({
   return (
     <Card
       sx={{
-        height: 120,
+        height: "auto",
         width: "100%",
         flex: "0 0 auto", // Cardの大きさを可変的にしないために必須
+        padding: 2,
         borderRadius: 0,
       }}
     >
-      <Box display={"flex"}>
+      <Box display={"flex"} alignItems={"center"}>
         <Avatar sx={{ width: 24, height: 24 }}>
           <PersonIcon sx={{ fontSize: 20 }} />
         </Avatar>
-        <Typography>{userName}</Typography>
+        <Typography fontSize={13} ml={1} fontWeight={"bold"}>
+          {userName}
+        </Typography>
       </Box>
-      <Typography>{threadMessage}</Typography>
+      <Typography fontSize={14}>{threadMessage}</Typography>
     </Card>
   );
 };

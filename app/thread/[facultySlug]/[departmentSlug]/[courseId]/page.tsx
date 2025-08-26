@@ -40,12 +40,14 @@ export default async function CoursePage({
   const threads = await getAllThreads(courseId);
   return (
     <Box display={"flex"} justifyContent={"space-between"}>
-      <Box>
-        講義名講義名のスレッド
-        <PostButton
-          text="投稿する"
-          href={`/thread/${facultySlug}/${departmentSlug}/${courseId}/post`}
-        />
+      <Box fontSize={20} fontWeight={500} mt={2} ml={5}>
+        <div>講義名講義名のスレッド</div>
+        <Box mt={2}>
+          <PostButton
+            text="+ スレッドを作成"
+            href={`/thread/${facultySlug}/${departmentSlug}/${courseId}/post`}
+          />
+        </Box>
         {threads.length === 0 ? (
           <div style={{ padding: 8, color: "#666" }}>
             スレッドはまだありません

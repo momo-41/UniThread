@@ -5,12 +5,10 @@ const ThreadMessagePostField = () => {
   return (
     <div>
       <TextField
-        variant="outlined"
+        size="small"
         placeholder="スレッドで投稿する"
         multiline
-        sx={{
-          width: "100%",
-        }}
+        sx={{ width: "100%" }}
         slotProps={{
           input: {
             endAdornment: (

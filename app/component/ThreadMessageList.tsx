@@ -1,3 +1,4 @@
+import { Stack } from "@mui/material";
 import ThreadMessage from "./ThreadMessage";
 
 type ThreadMessageItem = {
@@ -9,7 +10,7 @@ type ThreadMessageItem = {
 const ThreadMessageList = ({ items }: { items: ThreadMessageItem[] }) => {
   return (
     // 以下のコメントアウトを外せばmapのコードができる。下手がきの<ThreadMessage />は全部消す
-    <div>
+    <Stack mx={1.5}>
       {/* {items.map(({ id, userName, threadMessage }) => (
         <ThreadMessage
           key={id}
@@ -18,9 +19,34 @@ const ThreadMessageList = ({ items }: { items: ThreadMessageItem[] }) => {
         />
       ))} */}
       <ThreadMessage
+        userName={"momomomo"}
+        threadMessage={
+          "スレッドのメッセージスレッドのメッセスレッドのメッセージスレッドのメッセージスレッドのメッセージージスレッドのメッセージ"
+        }
+      />
+      <ThreadMessage
+        userName={"momo"}
+        threadMessage={
+          "スレッドのメッセージスレッドのメッセージスレッドのメッセージスレッドのメッセージスレッドのメッセージスレッドのメッセージスレッドのメッセージスレッドのメッセージスレッドのメッセージスレッドのメッセージスレッドのメッセージスレッドのメッセージスレッドのメッセージスレッドのメッセージスレッドのメッセージ"
+        }
+      />
+      <ThreadMessage
+        userName={"momomomomomo"}
+        threadMessage={
+          "スレッドのメッセージスレッドのメッセージスレッドのメッセージ"
+        }
+      />
+      <ThreadMessage
         userName={"momo"}
         threadMessage={
           "スレッドのメッセージスレッドのメッセージスレッドのメッセージ"
+        }
+      />
+
+      <ThreadMessage
+        userName={"momo"}
+        threadMessage={
+          "スレッドのメッセージスレッドのメッセージスレッドのメッセージスレッドのメッセージスレッドのメッセージスレッドのメッセージスレッドのメッセージスレッドのメッセージスレッドのメッセージスレッドのメッセージスレッドのメッセージスレッドのメッセージ"
         }
       />
       <ThreadMessage
@@ -41,13 +67,7 @@ const ThreadMessageList = ({ items }: { items: ThreadMessageItem[] }) => {
           "スレッドのメッセージスレッドのメッセージスレッドのメッセージ"
         }
       />
-      <ThreadMessage
-        userName={"momo"}
-        threadMessage={
-          "スレッドのメッセージスレッドのメッセージスレッドのメッセージ"
-        }
-      />
-    </div>
+    </Stack>
   );
 };
 
