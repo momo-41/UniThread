@@ -1,6 +1,5 @@
 import { Box, TextField as MuiTextField, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import React from "react";
 
 const CustomTextField = () => {
   return (
