@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { FacultyDepartmentData } from "@/data/faculty-department-data";
 import CourseCardList from "@/app/component/CourseCardList";
 import { getCourseData as fetchCourseData } from "@/lib/server/get-course-data";
+import SearchBox from "@/app/component/SearchBox";
 
 type TProps = {
   params: Promise<{ facultySlug: string; departmentSlug: string }>;
@@ -28,11 +29,14 @@ export default async function CoursesPage({ params }: TProps) {
   const courses = await getCourseData(facultySlug, departmentSlug);
 
   return (
-    <CourseCardList
-      departmentName={department.departmentName}
-      courses={courses}
-      facultySlug={facultySlug}
-      departmentSlug={departmentSlug}
-    />
+    <>
+      <SearchBox />
+      <CourseCardList
+        departmentName={department.departmentName}
+        courses={courses}
+        facultySlug={facultySlug}
+        departmentSlug={departmentSlug}
+      />
+    </>
   );
 }
