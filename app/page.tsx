@@ -7,7 +7,7 @@ const page = () => {
   return (
     <div>
       <PostButton text={"＋スレッドを作成"} href={"/thread"} />
-      <ThreadCard />
+      <ThreadCard title={""} authorName={""} createdAt={""} />
       <CourseCard
         courseName={""}
         facultySlug={""}
