@@ -1,6 +1,5 @@
-import React from "react";
 import ArticleCard from "./ArticleCard";
-import { Stack } from "@mui/material";
+import Grid from "@mui/material/Grid";
 
 type ArticleItem = {
   id: string;
@@ -9,16 +8,17 @@ type ArticleItem = {
 };
 
 const ArticleCardList = ({ items }: { items: ArticleItem[] }) => (
-  <Stack direction="column" spacing={2}>
+  <Grid container spacing={4} mx={8}>
     {items.map(({ id, title, author }) => (
-      <ArticleCard
-        key={id}
-        authorName={author.handle ?? author.displayName}
-        title={title}
-        articleId={id}
-      />
+      <Grid size={6} key={id} display={"flex"} justifyContent={"center"}>
+        <ArticleCard
+          authorName={author.handle ?? author.displayName}
+          title={title}
+          articleId={id}
+        />
+      </Grid>
     ))}
-  </Stack>
+  </Grid>
 );
 
 export default ArticleCardList;
