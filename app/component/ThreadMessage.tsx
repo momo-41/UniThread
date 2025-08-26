@@ -14,7 +14,7 @@ const ThreadMessage: React.FC<ThreadMessageProps> = ({
   return (
     <Card
       sx={{
-        height: 100,
+        height: 110,
         width: "100%",
         flex: "0 0 auto", // Cardの大きさを可変的にしないために必須
         borderRadius: 0,
