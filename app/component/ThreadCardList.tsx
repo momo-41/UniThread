@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
 import ThreadCard from "./ThreadCard";
 
-export type ThreadListItem = {
+type ThreadListItem = {
   id: string;
   title: string;
   createdAt: string;

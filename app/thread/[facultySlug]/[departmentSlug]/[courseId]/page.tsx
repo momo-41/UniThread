@@ -11,7 +11,7 @@ type Params = {
   courseId: string;
 };
 
-export type ThreadListItem = {
+type ThreadListItem = {
   id: string;
   title: string;
   createdAt: string;
