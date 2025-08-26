@@ -20,7 +20,14 @@ const CourseCardList = ({
 
   return (
     <>
-      <Typography variant="h6" sx={{ mb: 2 }}>
+      <Typography
+        fontWeight={550}
+        fontSize={20}
+        color="#383838"
+        ml={3}
+        my={1}
+        sx={{ mb: 2 }}
+      >
         {departmentName}の講義一覧
       </Typography>
 
