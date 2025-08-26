@@ -11,16 +11,4 @@ const CourseSearchButton: React.FC<CourseSearchButtonProps> = ({ text }) => {
   );
 };
 
-const CourseSearchButtonGroup: React.FC = () => {
-  return (
-    <div>
-      <CourseSearchButton text="全学年" />
-      <CourseSearchButton text="1年生" />
-      <CourseSearchButton text="2年生" />
-      <CourseSearchButton text="3年生" />
-      <CourseSearchButton text="4年生" />
-    </div>
-  );
-};
-
-export default CourseSearchButtonGroup;
+export default CourseSearchButton;
