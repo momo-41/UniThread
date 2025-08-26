@@ -1,9 +1,9 @@
 "use client";
-import { useState } from "react";
-import { Box, IconButton, TextField } from "@mui/material";
+import { useState, type FC } from "react";
+import { TextField, IconButton, InputAdornment } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
-type ThreadMessageProps = {
+type ThreadMessagePostProps = {
   threadId: string;
   onPosted?: (item: {
     id: string;
@@ -12,10 +12,10 @@ type ThreadMessageProps = {
   }) => void;
 };
 
-export default function ThreadMessagePostField({
+const ThreadMessagePostField: FC<ThreadMessagePostProps> = ({
   threadId,
   onPosted,
-}: ThreadMessageProps) {
+}) => {
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -28,32 +28,36 @@ export default function ThreadMessagePostField({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ body: value.trim() }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.message ?? "投稿に失敗しました。");
 
-      const m = data.message as {
+      const ct = res.headers.get("content-type") ?? "";
+      const data = ct.includes("application/json")
+        ? await res.json()
+        : { message: await res.text() };
+
+      if (!res.ok) {
+        throw new Error((data as any)?.message ?? "投稿に失敗しました。");
+      }
+
+      const m = (data as any).message as {
         id: string;
         body: string;
         author: { handle: string | null; displayName: string };
       };
 
-      const newItem = {
+      onPosted?.({
         id: m.id,
         userName: m.author.handle ?? m.author.displayName,
         threadMessage: m.body,
-      };
-
-      onPosted?.(newItem);
+      });
       setValue("");
-    } catch (err) {
-      console.error(err);
+    } catch (e) {
+      console.error(e);
     } finally {
       setLoading(false);
     }
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
-    // Ctrl+Enter で送信（Macは metaKey）
     if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
       e.preventDefault();
       handleSubmit();
@@ -61,25 +65,35 @@ export default function ThreadMessagePostField({
   }
 
   return (
-    <Box display="flex" gap={1} alignItems="flex-end">
+    <div>
       <TextField
         variant="outlined"
         placeholder="スレッドで投稿する"
         multiline
-        minRows={2}
         sx={{ width: "100%" }}
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={handleKeyDown}
+        slotProps={{
+          input: {
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="送信"
+                  edge="end"
+                  onClick={handleSubmit}
+                  disabled={loading || !value.trim() || !threadId}
+                  sx={{ pr: 1, color: "#1E8093" }}
+                >
+                  <SendIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
+          },
+        }}
       />
-      <IconButton
-        aria-label="送信"
-        onClick={handleSubmit}
-        disabled={loading || !value.trim()}
-        sx={{ color: "#1E8093" }}
-      >
-        <SendIcon />
-      </IconButton>
-    </Box>
+    </div>
   );
-}
+};
+
+export default ThreadMessagePostField;
