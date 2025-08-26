@@ -16,10 +16,10 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider localization={jaJP}>
-      <html lang="ja">
+      <html lang="ja" style={{ backgroundColor: "#F7FCFF" }}>
         <body style={{ margin: 0 }}>
           <Header />
-          <SubHeader/>
+          <SubHeader />
           {children}
         </body>
       </html>
