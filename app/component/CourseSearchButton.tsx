@@ -22,5 +22,4 @@ const CourseSearchButtonGroup: React.FC = () => {
     </div>
   );
 };
-
 export default CourseSearchButtonGroup;
