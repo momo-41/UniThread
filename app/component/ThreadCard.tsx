@@ -1,7 +1,7 @@
 import { Card, Box, Typography, Avatar } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 
-export type ThreadCardProps = {
+type ThreadCardProps = {
   title: string;
   authorName: string;
   createdAt: string;
