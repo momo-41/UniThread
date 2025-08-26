@@ -1,6 +1,6 @@
 import { FacultyDepartmentData } from "@/data/faculty-department-data";
 import { DepartmentsCardListProps } from "@/types/faculty-department-type";
-import { Typography, Box, Grid } from "@mui/material";
+import { Typography, Grid } from "@mui/material";
 import FacultyDepartmentCard from "./FacultyDepartmentCard";
 
 const DepartmentsCardList: React.FC<DepartmentsCardListProps> = ({
