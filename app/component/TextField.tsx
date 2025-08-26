@@ -11,6 +11,7 @@ const CustomTextField = () => {
       justifyContent={"center"}
     >
       <MuiTextField
+        size="small"
         id="outlined-basic"
         placeholder="講義名・投稿内容・タグで検索"
         InputProps={{
