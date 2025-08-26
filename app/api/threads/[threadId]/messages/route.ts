@@ -98,3 +98,61 @@ export async function POST(
     );
   }
 }
+
+export async function GET(
+  req: Request,
+  { params }: { params: { threadId: string } }
+) {
+  try {
+    const { threadId } = params;
+    if (!threadId || !/^[0-9a-fA-F-]{36}$/.test(threadId)) {
+      return NextResponse.json(
+        { message: "threadId はUUID形式で指定してください。" },
+        { status: 400 }
+      );
+    }
+
+    const url = new URL(req.url);
+    const limit = Number(url.searchParams.get("limit") ?? 20);
+    const cursor = url.searchParams.get("cursor") ?? undefined;
+    const order =
+      (url.searchParams.get("order") ?? "asc").toLowerCase() === "desc"
+        ? "desc"
+        : "asc";
+
+    const records = await prisma.threadMessage.findMany({
+      where: { threadId },
+      orderBy: [{ createdAt: order }, { id: order }],
+      take: Math.min(Math.max(limit, 1), 100),
+      ...(cursor ? { skip: 1, cursor: { id: cursor } } : {}),
+      select: {
+        id: true,
+        body: true,
+        createdAt: true,
+        editedAt: true,
+        author: { select: { handle: true, displayName: true } },
+      },
+    });
+
+    const nextCursor =
+      records.length === limit ? records[records.length - 1].id : null;
+
+    return NextResponse.json({
+      messages: records.map((m) => ({
+        id: m.id,
+        body: m.body,
+        createdAt: m.createdAt,
+        editedAt: m.editedAt,
+        author: m.author,
+      })),
+      nextCursor,
+      hasMore: !!nextCursor,
+    });
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json(
+      { message: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
+}
