@@ -1,13 +1,4 @@
-"use client";
-import * as React from "react";
-import {
-  Card,
-  CardActionArea,
-  CardContent,
-  Typography,
-  Stack,
-} from "@mui/material";
-import Avatar from "@mui/material/Avatar";
+import { Card, CardActionArea, Typography, Avatar, Box } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import Link from "next/link";
 
@@ -23,21 +14,44 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
   articleId,
 }) => {
   return (
-    <Card variant="outlined" sx={{ borderRadius: 2 }}>
-      <CardActionArea component={Link} href={`/article/${articleId}`}>
-        <Avatar>
-          <PersonIcon />
-        </Avatar>
-        <CardContent>
-          <Stack spacing={0.5}>
-            <Typography variant="body2" color="text.secondary">
+    <Card
+      variant="outlined"
+      sx={{
+        borderRadius: 2,
+        height: 120,
+        width: 530,
+      }}
+    >
+      <CardActionArea
+        component={Link}
+        href={`/article/${articleId}`}
+        sx={{ height: "100%" }}
+      >
+        <Box p={2}>
+          <Box display={"flex"} mb={1}>
+            <Avatar sx={{ width: 24, height: 24 }}>
+              <PersonIcon sx={{ fontSize: 20 }} />
+            </Avatar>
+            <Typography
+              fontSize={14}
+              ml={1}
+              fontWeight={"bold"}
+              color={"#444444"}
+            >
               {authorName}
             </Typography>
-            <Typography variant="subtitle1" fontWeight={700}>
+          </Box>
+          <Box>
+            <Typography
+              mt={1}
+              fontSize={17}
+              fontWeight={"bold"}
+              color={"#444444"}
+            >
               {title}
             </Typography>
-          </Stack>
-        </CardContent>
+          </Box>
+        </Box>
       </CardActionArea>
     </Card>
   );
