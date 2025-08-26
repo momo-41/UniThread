@@ -2,12 +2,15 @@ import PostButton from "@/app/component/PostButton";
 import ThreadCardList from "@/app/component/ThreadCardList";
 import { headers } from "next/headers";
 import React from "react";
+import ThreadMessageView from "@/app/component/ThreadMessageView";
+import { Box } from "@mui/material";
 
 type Params = {
   facultySlug: string;
   departmentSlug: string;
   courseId: string;
 };
+
 export type ThreadListItem = {
   id: string;
   title: string;
@@ -36,18 +39,24 @@ export default async function CoursePage({
   const { facultySlug, departmentSlug, courseId } = await params;
   const threads = await getAllThreads(courseId);
   return (
-    <div>
-      <PostButton
-        text="投稿する"
-        href={`/thread/${facultySlug}/${departmentSlug}/${courseId}/post`}
-      />
-      {threads.length === 0 ? (
-        <div style={{ padding: 8, color: "#666" }}>
-          スレッドはまだありません
-        </div>
-      ) : (
-        <ThreadCardList items={threads} />
-      )}
-    </div>
+    <Box display={"flex"} justifyContent={"space-between"}>
+      <Box>
+        講義名講義名のスレッド
+        <PostButton
+          text="投稿する"
+          href={`/thread/${facultySlug}/${departmentSlug}/${courseId}/post`}
+        />
+        {threads.length === 0 ? (
+          <div style={{ padding: 8, color: "#666" }}>
+            スレッドはまだありません
+          </div>
+        ) : (
+          <ThreadCardList items={threads} />
+        )}
+      </Box>
+      <Box my={2} mr={8}>
+        <ThreadMessageView items={[]} />
+      </Box>
+    </Box>
   );
 }
