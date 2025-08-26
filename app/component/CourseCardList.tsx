@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Typography, Grid } from "@mui/material";
 import CourseCard from "@/app/component/CourseCard";
 
 type Course = { id: string; courseName: string; courseSlug: string | null };
@@ -29,17 +29,23 @@ const CourseCardList = ({
           講義が見つかりませんでした。
         </Typography>
       ) : (
-        <>
+        <Grid container spacing={4} mx={8}>
           {courses.map((course) => (
-            <CourseCard
+            <Grid
+              size={4}
               key={course.id}
-              courseName={course.courseName}
-              facultySlug={facultySlug}
-              departmentSlug={departmentSlug}
-              courseId={course.id}
-            />
+              display={"flex"}
+              justifyContent={"center"}
+            >
+              <CourseCard
+                courseName={course.courseName}
+                facultySlug={facultySlug}
+                departmentSlug={departmentSlug}
+                courseId={course.id}
+              />
+            </Grid>
           ))}
-        </>
+        </Grid>
       )}
     </>
   );
