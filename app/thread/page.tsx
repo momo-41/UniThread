@@ -1,11 +1,11 @@
 import React from "react";
 import FacultyCardList from "../component/FacultyCardList";
-import TextField from "../component/TextField";
+import SearchBox from "../component/SearchBox";
 
 const threadPage = () => {
   return (
     <div>
-      <TextField />
+      <SearchBox />
       <FacultyCardList />
     </div>
   );

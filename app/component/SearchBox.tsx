@@ -1,7 +1,7 @@
 import { Box, TextField as MuiTextField, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
-const CustomTextField = () => {
+const SearchBox = () => {
   return (
     <Box
       component="form"
@@ -26,4 +26,4 @@ const CustomTextField = () => {
   );
 };
 
-export default CustomTextField;
+export default SearchBox;
