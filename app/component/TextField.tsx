@@ -1,0 +1,29 @@
+import { Box, TextField as MuiTextField, InputAdornment } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import React from "react";
+
+const CustomTextField = () => {
+  return (
+    <Box
+      component="form"
+      sx={{ "& > :not(style)": { mt: 2, width: "50ch" } }}
+      autoComplete="off"
+      display={"flex"}
+      justifyContent={"center"}
+    >
+      <MuiTextField
+        id="outlined-basic"
+        placeholder="講義名・投稿内容・タグで検索"
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }}
+      />
+    </Box>
+  );
+};
+
+export default CustomTextField;
