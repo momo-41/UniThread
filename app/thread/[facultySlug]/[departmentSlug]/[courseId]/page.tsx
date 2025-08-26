@@ -55,7 +55,11 @@ export default async function CoursePage({
         )}
       </Box>
       <Box my={2} mr={8}>
-        <ThreadMessageView items={[]} />
+        <ThreadMessageView
+          threadId={"008935e1-aeaf-4e5c-b706-5c47b5cd9448"}
+          title={"サンプルスレッドタイトル"}
+          initialItems={[]}
+        />
       </Box>
     </Box>
   );
