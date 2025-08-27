@@ -14,14 +14,14 @@ const Body = z.object({
 
 export async function POST(
   req: Request,
-  { params }: { params: { threadId: string } }
+  { params }: { params: Promise<{ threadId: string }> }
 ) {
   try {
     const { userId: clerkUserId } = await auth();
     if (!clerkUserId)
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 
-    const { threadId } = params;
+    const { threadId } = await params;
     if (!threadId || !/^[0-9a-fA-F-]{36}$/.test(threadId)) {
       return NextResponse.json(
         { message: "threadId はUUID形式で指定してください。" },
@@ -101,10 +101,10 @@ export async function POST(
 
 export async function GET(
   req: Request,
-  { params }: { params: { threadId: string } }
+  { params }: { params: Promise<{ threadId: string }> }
 ) {
   try {
-    const { threadId } = params;
+    const { threadId } = await params;
     if (!threadId || !/^[0-9a-fA-F-]{36}$/.test(threadId)) {
       return NextResponse.json(
         { message: "threadId はUUID形式で指定してください。" },
