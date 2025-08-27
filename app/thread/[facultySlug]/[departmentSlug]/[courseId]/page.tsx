@@ -28,30 +28,26 @@ async function getAllThreads(courseId: string): Promise<ThreadListItem[]> {
   return res.json();
 }
 
-export default async function CoursePage({
-  params,
-}: {
-  params: Promise<Params>;
-}) {
-  const { facultySlug, departmentSlug, courseId } = await params;
+export default async function CoursePage({ params }: { params: Params }) {
+  const { facultySlug, departmentSlug, courseId } = params;
+  const cookieHeader = (await headers()).get("cookie") ?? "";
   const threads = await getAllThreads(courseId);
-  //selectedはスレッドメッセージを取得しているスレッド自体を指す
+  // スレッドメッセージを表示する対象スレッド
   const selected = threads[0] ?? null;
-
   let initialItems: { id: string; userName: string; threadMessage: string }[] =
     [];
+
   if (selected) {
-    const cookieHeader = (await headers()).get("cookie") ?? "";
     const res = await fetch(
-      `${process.env.APP_URL!}/api/threads/${selected.id}/messages?limit=50`,
+      `${process.env.APP_URL!}/api/threads/${selected.id}/messages`,
       { cache: "no-store", headers: { cookie: cookieHeader } }
     );
     if (res.ok) {
       const data = await res.json();
       initialItems = (data.messages ?? []).map((m: any) => ({
         id: m.id,
-        userName: m.author.handle ?? m.author.displayName,
-        threadMessage: m.body,
+        userName: m.author?.handle ?? m.author?.displayName ?? "名無し",
+        threadMessage: m.content,
       }));
     }
   }
