@@ -35,7 +35,7 @@ const ThreadMessageView: FC<ThreadMessageViewProps> = ({
     if (initialItems.length > 0) return;
     let aborted = false;
     (async () => {
-      const res = await fetch(`/api/threads/${threadId}/messages?limit=50`, {
+      const res = await fetch(`/api/threads/${threadId}/messages`, {
         cache: "no-store",
       });
       if (!res.ok) return;
