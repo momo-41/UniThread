@@ -112,19 +112,9 @@ export async function GET(
       );
     }
 
-    const url = new URL(req.url);
-    const limit = Number(url.searchParams.get("limit") ?? 20);
-    const cursor = url.searchParams.get("cursor") ?? undefined;
-    const order =
-      (url.searchParams.get("order") ?? "asc").toLowerCase() === "desc"
-        ? "desc"
-        : "asc";
-
     const records = await prisma.threadMessage.findMany({
       where: { threadId },
-      orderBy: [{ createdAt: order }, { id: order }],
-      take: Math.min(Math.max(limit, 1), 100),
-      ...(cursor ? { skip: 1, cursor: { id: cursor } } : {}),
+      orderBy: [{ createdAt: "asc" }, { id: "asc" }],
       select: {
         id: true,
         body: true,
@@ -134,19 +124,14 @@ export async function GET(
       },
     });
 
-    const nextCursor =
-      records.length === limit ? records[records.length - 1].id : null;
-
     return NextResponse.json({
       messages: records.map((m) => ({
         id: m.id,
-        body: m.body,
+        content: m.body,
         createdAt: m.createdAt,
         editedAt: m.editedAt,
         author: m.author,
       })),
-      nextCursor,
-      hasMore: !!nextCursor,
     });
   } catch (e) {
     console.error(e);
