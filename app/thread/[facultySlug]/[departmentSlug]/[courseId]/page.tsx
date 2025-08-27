@@ -18,8 +18,10 @@ type ThreadListItem = {
   author: { handle: string | null; displayName: string };
 };
 
-async function getAllThreads(courseId: string): Promise<ThreadListItem[]> {
-  const cookieHeader = (await headers()).get("cookie") ?? "";
+async function getAllThreads(
+  courseId: string,
+  cookieHeader: string
+): Promise<ThreadListItem[]> {
   const res = await fetch(
     `${process.env.APP_URL!}/api/threads?courseId=${courseId}`,
     { cache: "no-store", headers: { cookie: cookieHeader } }
@@ -31,9 +33,11 @@ async function getAllThreads(courseId: string): Promise<ThreadListItem[]> {
 export default async function CoursePage(props: { params: Params }) {
   const { params } = await Promise.resolve(props);
   const { facultySlug, departmentSlug, courseId } = params;
+
   const cookieHeader = (await headers()).get("cookie") ?? "";
-  const threads = await getAllThreads(courseId);
-  // スレッドメッセージを表示する対象スレッド
+  // ← cookie を渡して二重取得を回避
+  const threads = await getAllThreads(courseId, cookieHeader);
+  // スレッドメッセージを表示する対象スレッド（とりあえず先頭）
   const selected = threads[0] ?? null;
   let initialItems: { id: string; userName: string; threadMessage: string }[] =
     [];
@@ -48,7 +52,7 @@ export default async function CoursePage(props: { params: Params }) {
       initialItems = (data.messages ?? []).map((m: any) => ({
         id: m.id,
         userName: m.author?.handle ?? m.author?.displayName ?? "名無し",
-        threadMessage: m.content,
+        threadMessage: m.body,
       }));
     }
   }
