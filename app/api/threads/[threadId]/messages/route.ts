@@ -14,14 +14,15 @@ const Body = z.object({
 
 export async function POST(
   req: Request,
-  { params }: { params: Promise<{ threadId: string }> }
+  params: { params: Promise<{ threadId: string }> }
 ) {
   try {
     const { userId: clerkUserId } = await auth();
-    if (!clerkUserId)
+    if (!clerkUserId) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
 
-    const { threadId } = await params;
+    const { threadId } = await params.params;
     if (!threadId || !/^[0-9a-fA-F-]{36}$/.test(threadId)) {
       return NextResponse.json(
         { message: "threadId はUUID形式で指定してください。" },
@@ -31,26 +32,27 @@ export async function POST(
 
     const json = await req.json();
     const { body } = Body.parse(json);
-
     const me = await prisma.profile.findUnique({
       where: { clerkUserId },
       select: { id: true },
     });
-    if (!me)
+    if (!me) {
       return NextResponse.json(
         { message: "プロフィールが見つかりません。" },
         { status: 404 }
       );
+    }
 
     const thread = await prisma.thread.findUnique({
       where: { id: threadId },
       select: { id: true },
     });
-    if (!thread)
+    if (!thread) {
       return NextResponse.json(
         { message: "スレッドが見つかりません。" },
         { status: 404 }
       );
+    }
 
     const updated = await prisma.thread.update({
       where: { id: threadId },
@@ -62,7 +64,7 @@ export async function POST(
         id: true,
         updatedAt: true,
         messages: {
-          orderBy: { createdAt: "desc" },
+          orderBy: [{ createdAt: "desc" }, { id: "desc" }],
           take: 1,
           select: {
             id: true,
@@ -76,11 +78,18 @@ export async function POST(
     });
 
     const created = updated.messages[0];
+
     return NextResponse.json(
       {
         threadId: updated.id,
         threadUpdatedAt: updated.updatedAt,
-        message: created,
+        message: {
+          id: created.id,
+          content: created.body,
+          createdAt: created.createdAt,
+          editedAt: created.editedAt,
+          author: created.author,
+        },
       },
       { status: 201 }
     );
@@ -101,10 +110,10 @@ export async function POST(
 
 export async function GET(
   req: Request,
-  { params }: { params: Promise<{ threadId: string }> }
+  params: { params: Promise<{ threadId: string }> }
 ) {
   try {
-    const { threadId } = await params;
+    const { threadId } = await params.params;
     if (!threadId || !/^[0-9a-fA-F-]{36}$/.test(threadId)) {
       return NextResponse.json(
         { message: "threadId はUUID形式で指定してください。" },
