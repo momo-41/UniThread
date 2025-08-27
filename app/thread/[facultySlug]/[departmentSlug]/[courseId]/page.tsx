@@ -28,7 +28,8 @@ async function getAllThreads(courseId: string): Promise<ThreadListItem[]> {
   return res.json();
 }
 
-export default async function CoursePage({ params }: { params: Params }) {
+export default async function CoursePage(props: { params: Params }) {
+  const { params } = await Promise.resolve(props);
   const { facultySlug, departmentSlug, courseId } = params;
   const cookieHeader = (await headers()).get("cookie") ?? "";
   const threads = await getAllThreads(courseId);
