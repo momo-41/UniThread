@@ -3,6 +3,7 @@ import { Box, Typography } from "@mui/material";
 import { useEffect, useRef } from "react";
 import ThreadMessagePostField from "./ThreadMessagePostField";
 import ThreadMessageList from "./ThreadMessageList";
+import UpdateButton from "./UpdateButton";
 
 export type ThreadMessageItem = {
   id: string;
@@ -40,8 +41,10 @@ const ThreadMessageView = ({ items }: { items: ThreadMessageItem[] }) => {
         borderBottom={1}
         borderColor={"#CCCCCC"}
       >
+        <UpdateButton />
         スレッドのタイトル！
       </Typography>
+
       <Box
         ref={scrollerRef}
         display={"flex"}
