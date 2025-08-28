@@ -33,17 +33,19 @@ const ThreadMessageView = ({ items }: { items: ThreadMessageItem[] }) => {
       borderRadius={1}
       borderColor={"#CCCCCC"}
     >
-      <Typography
-        p={2}
-        fontSize={22}
-        fontWeight={600}
-        color="#3C3C3C"
+      <Box
+        display={"flex"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
         borderBottom={1}
         borderColor={"#CCCCCC"}
+        p={1.5}
       >
+        <Typography fontSize={22} fontWeight={600} color="#3C3C3C">
+          スレッドのタイトル！
+        </Typography>
         <UpdateButton />
-        スレッドのタイトル！
-      </Typography>
+      </Box>
 
       <Box
         ref={scrollerRef}
