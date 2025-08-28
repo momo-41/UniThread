@@ -1,27 +1,69 @@
 "use client";
 import { Box, Typography } from "@mui/material";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, type FC } from "react";
 import ThreadMessagePostField from "./ThreadMessagePostField";
 import ThreadMessageList from "./ThreadMessageList";
 import UpdateButton from "./UpdateButton";
 
-export type ThreadMessageItem = {
+type ThreadMessageItem = {
   id: string;
   userName: string;
   threadMessage: string;
 };
 
-const ThreadMessageView = ({ items }: { items: ThreadMessageItem[] }) => {
+type RawMessage = {
+  id: string;
+  content: string;
+  author: { handle: string | null; displayName: string };
+};
+
+type ThreadMessageViewProps = {
+  threadId: string;
+  title?: string;
+  initialItems?: ThreadMessageItem[];
+};
+
+const ThreadMessageView: FC<ThreadMessageViewProps> = ({
+  threadId,
+  title = "スレッドのタイトル！",
+  initialItems = [],
+}) => {
+  const [items, setItems] = useState<ThreadMessageItem[]>(initialItems);
   const scrollerRef = useRef<HTMLDivElement | null>(null);
 
-  // 初回のマウント時に一番下へスクロール
+  // 初期ロード（SSRから渡されていない時だけGET）
+  useEffect(() => {
+    if (initialItems.length > 0) return;
+    let aborted = false;
+    (async () => {
+      const res = await fetch(`/api/threads/${threadId}/messages`, {
+        cache: "no-store",
+      });
+      if (!res.ok) return;
+      const data = (await res.json()) as { messages: RawMessage[] };
+      if (!aborted) {
+        setItems(
+          (data.messages ?? []).map((m) => ({
+            id: m.id,
+            userName: m.author.handle ?? m.author.displayName,
+            threadMessage: m.content,
+          }))
+        );
+      }
+    })();
+    return () => {
+      aborted = true;
+    };
+  }, [threadId, initialItems]);
+
+  // マウント時 & 追加時に最下部へ
   useEffect(() => {
     const el = scrollerRef.current;
     if (!el) return;
     requestAnimationFrame(() => {
       el.scrollTop = el.scrollHeight;
     });
-  }, []);
+  }, [items]);
 
   return (
     <Box
@@ -42,11 +84,10 @@ const ThreadMessageView = ({ items }: { items: ThreadMessageItem[] }) => {
         p={1.5}
       >
         <Typography fontSize={22} fontWeight={600} color="#3C3C3C">
-          スレッドのタイトル！
+          {title}
         </Typography>
         <UpdateButton />
       </Box>
-
       <Box
         ref={scrollerRef}
         display={"flex"}
@@ -56,8 +97,12 @@ const ThreadMessageView = ({ items }: { items: ThreadMessageItem[] }) => {
       >
         <ThreadMessageList items={items} />
       </Box>
+
       <Box p={2} borderTop={1} borderColor={"#CCCCCC"}>
-        <ThreadMessagePostField />
+        <ThreadMessagePostField
+          threadId={threadId}
+          onPosted={(newItem) => setItems((prev) => [...prev, newItem])}
+        />
       </Box>
     </Box>
   );

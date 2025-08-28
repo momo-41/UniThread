@@ -18,28 +18,47 @@ type ThreadListItem = {
   author: { handle: string | null; displayName: string };
 };
 
-async function getAllThreads(courseId: string): Promise<ThreadListItem[]> {
-  const cookieHeader = (await headers()).get("cookie") ?? "";
+async function getAllThreads(
+  courseId: string,
+  cookieHeader: string
+): Promise<ThreadListItem[]> {
   const res = await fetch(
     `${process.env.APP_URL!}/api/threads?courseId=${courseId}`,
-    {
-      cache: "no-store",
-      headers: { cookie: cookieHeader },
-    }
+    { cache: "no-store", headers: { cookie: cookieHeader } }
   );
   if (!res.ok) return [];
   return res.json();
 }
 
-export default async function CoursePage({
-  params,
-}: {
-  params: Promise<Params>;
-}) {
-  const { facultySlug, departmentSlug, courseId } = await params;
-  const threads = await getAllThreads(courseId);
+export default async function CoursePage(props: { params: Params }) {
+  const { params } = await Promise.resolve(props);
+  const { facultySlug, departmentSlug, courseId } = params;
+
+  const cookieHeader = (await headers()).get("cookie") ?? "";
+  // ← cookie を渡して二重取得を回避
+  const threads = await getAllThreads(courseId, cookieHeader);
+  // スレッドメッセージを表示する対象スレッド（とりあえず先頭）
+  const selected = threads[0] ?? null;
+  let initialItems: { id: string; userName: string; threadMessage: string }[] =
+    [];
+
+  if (selected) {
+    const res = await fetch(
+      `${process.env.APP_URL!}/api/threads/${selected.id}/messages`,
+      { cache: "no-store", headers: { cookie: cookieHeader } }
+    );
+    if (res.ok) {
+      const data = await res.json();
+      initialItems = (data.messages ?? []).map((m: any) => ({
+        id: m.id,
+        userName: m.author?.handle ?? m.author?.displayName ?? "名無し",
+        threadMessage: m.body,
+      }));
+    }
+  }
+
   return (
-    <Box display={"flex"} justifyContent={"space-between"}>
+    <Box display="flex" justifyContent="space-between">
       <Box>
         講義名講義名のスレッド
         <PostButton
@@ -54,9 +73,16 @@ export default async function CoursePage({
           <ThreadCardList items={threads} />
         )}
       </Box>
-      <Box my={2} mr={8}>
-        <ThreadMessageView items={[]} />
-      </Box>
+
+      {selected && (
+        <Box my={2} mr={8}>
+          <ThreadMessageView
+            threadId={selected.id}
+            title={selected.title}
+            initialItems={initialItems}
+          />
+        </Box>
+      )}
     </Box>
   );
 }
