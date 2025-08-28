@@ -3,6 +3,7 @@ import { FacultyDepartmentData } from "@/data/faculty-department-data";
 import CourseCardList from "@/app/component/CourseCardList";
 import { getCourseData as fetchCourseData } from "@/lib/server/get-course-data";
 import CourseSearchButton from "@/app/component/CourseSearchButton";
+import SearchBox from "@/app/component/SearchBox";
 
 type TProps = {
   params: Promise<{ facultySlug: string; departmentSlug: string }>;
@@ -30,6 +31,7 @@ export default async function CoursesPage({ params }: TProps) {
 
   return (
     <>
+      <SearchBox />
       <CourseSearchButton text={"全学年"} />
       <CourseSearchButton text={"1年生"} />
       <CourseSearchButton text={"2年生"} />

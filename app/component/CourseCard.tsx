@@ -28,7 +28,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
         }}
       >
         <CardContent>
-          <Typography color="#383838" fontSize={18} fontWeight={500}>
+          <Typography color="#444444" fontSize={18} fontWeight={600}>
             {courseName}
           </Typography>
         </CardContent>
