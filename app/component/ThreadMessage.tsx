@@ -21,7 +21,7 @@ const ThreadMessage: React.FC<ThreadMessageProps> = ({
         borderRadius: 0,
       }}
     >
-      <Box display={"flex"} alignItems={"center"}>
+      <Box display={"flex"} >
         <Avatar sx={{ width: 24, height: 24 }}>
           <PersonIcon sx={{ fontSize: 20 }} />
         </Avatar>
@@ -30,6 +30,17 @@ const ThreadMessage: React.FC<ThreadMessageProps> = ({
         </Typography>
       </Box>
       <Typography fontSize={14}>{threadMessage}</Typography>
+      <Box display={"flex"} alignItems={"center"}>
+        <Avatar sx={{ width: 24, height: 24}}>
+          <PersonIcon sx={{ fontSize: 20 }} />
+        </Avatar>
+        <Typography fontWeight={"bold"} fontSize={13} ml={1}>
+          {userName}
+        </Typography>
+      </Box>
+      <Typography fontSize={14}>
+        {threadMessage}
+      </Typography>
     </Card>
   );
 };

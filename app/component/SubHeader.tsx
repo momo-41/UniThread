@@ -1,6 +1,12 @@
+"use client";
+import { usePathname } from "next/navigation";
 import { Box, AppBar, Toolbar } from "@mui/material";
 import Button from "@mui/material/Button";
 const SubHeader = () => {
+  const pathname = usePathname();
+  const isThreadActive = pathname.startsWith("/thread");
+  const isArticleActive = pathname.startsWith("/article");
+  const isQuestionActive = pathname.startsWith("/question");
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -12,7 +18,11 @@ const SubHeader = () => {
           <Button
             color="inherit"
             size="large"
-            sx={{ "&:hover": { backgroundColor: "#0B737F", borderRadius: 0 } }}
+            sx={{
+              "&:hover": { backgroundColor: "#178A97", borderRadius: 0 },
+              backgroundColor: isThreadActive ? "#0B737F" : undefined,
+              borderRadius: 0,
+            }}
             href="/thread"
           >
             スレッド
@@ -20,7 +30,11 @@ const SubHeader = () => {
           <Button
             color="inherit"
             size="large"
-            sx={{ "&:hover": { backgroundColor: "#0B737F", borderRadius: 0 } }}
+            sx={{
+              "&:hover": { backgroundColor: "#178A97", borderRadius: 0 },
+              backgroundColor: isArticleActive ? "#0B737F" : undefined,
+              borderRadius: 0,
+            }}
             href="/article"
           >
             みんなの記事
@@ -28,7 +42,11 @@ const SubHeader = () => {
           <Button
             color="inherit"
             size="large"
-            sx={{ "&:hover": { backgroundColor: "#0B737F", borderRadius: 0 } }}
+            sx={{
+              "&:hover": { backgroundColor: "#178A97", borderRadius: 0 },
+              backgroundColor: isQuestionActive ? "#0B737F" : undefined,
+              borderRadius: 0,
+            }}
             href="/question"
           >
             質問

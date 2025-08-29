@@ -1,7 +1,5 @@
-import React from "react";
 import ArticleCardList from "../component/ArticleCardList";
 import { headers } from "next/headers";
-import PostButton from "../component/PostButton";
 
 async function getAllArticleposts() {
   const response = await fetch(`${process.env.APP_URL!}/api/article`, {
@@ -17,7 +15,6 @@ const ArticlePage = async () => {
 
   return (
     <div>
-      <PostButton text={"投稿する"} href={"/article/post"} />
       {allArticlePosts.length === 0 ? (
         <div style={{ padding: 8, color: "#666" }}>
           記事が投稿されていません
