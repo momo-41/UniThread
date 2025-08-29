@@ -9,7 +9,7 @@ type ThreadListItem = {
 };
 
 const ThreadCardList: React.FC<{ items: ThreadListItem[] }> = ({ items }) => (
-  <Stack direction="column" gap={2}>
+  <Stack direction="column" gap={2} mr={8} mt={2}>
     {items.map(({ id, title, createdAt, author }) => (
       <ThreadCard
         key={id}

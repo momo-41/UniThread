@@ -67,7 +67,7 @@ const ThreadMessagePostField: FC<ThreadMessagePostProps> = ({
   return (
     <div>
       <TextField
-        variant="outlined"
+        size="small"
         placeholder="スレッドで投稿する"
         multiline
         sx={{ width: "100%" }}
