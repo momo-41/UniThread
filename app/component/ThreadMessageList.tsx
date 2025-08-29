@@ -1,4 +1,3 @@
-import { Stack } from "@mui/material";
 import ThreadMessage from "./ThreadMessage";
 
 export type ThreadMessageItem = {

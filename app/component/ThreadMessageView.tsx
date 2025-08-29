@@ -67,21 +67,14 @@ const ThreadMessageView: FC<ThreadMessageViewProps> = ({
 
   return (
     <Box
-      mr={4}
       height={"80vh"}
-      width={"57vw"}
+      width={"60vw"}
       display={"flex"}
       flexDirection={"column"}
       border={1}
       borderRadius={1}
       borderColor={"#CCCCCC"}
     >
-//      <Typography
-//        p={1}
-//        ml={1}
-//        fontSize={18}
-//        fontWeight={600}
-//        color="#3C3C3C"
       <Box
         display={"flex"}
         justifyContent={"space-between"}
