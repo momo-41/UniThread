@@ -5,6 +5,7 @@ type ThreadCardProps = {
   title: string;
   authorName: string;
   createdAt: string;
+  active?: boolean;
 };
 
 const ThreadCard: React.FC<ThreadCardProps> = ({
