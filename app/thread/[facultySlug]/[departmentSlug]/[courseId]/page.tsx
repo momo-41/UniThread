@@ -17,9 +17,6 @@ type ThreadListItem = {
   createdAt: string;
   author: { handle: string | null; displayName: string };
 };
-
-const BASE = process.env.APP_URL!.replace(/\/$/, "");
-
 async function getAllThreads(
   courseId: string,
   cookieHeader: string
@@ -62,6 +59,8 @@ export default async function CoursePage(props: {
       }));
     }
   }
+
+   const basePath = `/thread/${facultySlug}/${departmentSlug}/${courseId}`;
 
   return (
     <Box display="flex" justifyContent="space-between">
