@@ -1,24 +1,36 @@
 import { Stack } from "@mui/material";
 import ThreadCard from "./ThreadCard";
+import Link from "next/link";
 
-type ThreadListItem = {
-  id: string;
-  title: string;
-  createdAt: string;
-  author: { handle: string | null; displayName: string };
+type ThreadCardListProps = {
+  items: {
+    id: string;
+    title: string;
+    createdAt: string;
+    author: { handle: string | null; displayName: string };
+  }[];
+  selectedId: string | null;
+  basePath: string;
 };
 
-const ThreadCardList: React.FC<{ items: ThreadListItem[] }> = ({ items }) => (
-  <Stack direction="column" gap={2}>
-    {items.map(({ id, title, createdAt, author }) => (
-      <ThreadCard
-        key={id}
-        title={title}
-        createdAt={createdAt}
-        authorName={author.handle ?? author.displayName}
-      />
-    ))}
-  </Stack>
-);
-
+const ThreadCardList = ({ items, selectedId, basePath }: ThreadCardListProps) => {
+  return (
+           <Stack direction="column" spacing={2}>
+      {items.map((t) => {
+        const href = `${basePath}?t=${t.id}`;
+        const isActive = t.id === selectedId;
+        return (
+          <Link key={t.id} href={href} replace scroll={false} style={{ textDecoration: "none" }}>
+            <ThreadCard
+              title={t.title}
+              authorName={t.author.handle ?? t.author.displayName}
+              createdAt={t.createdAt}
+              active={isActive}
+            />
+          </Link>
+        );
+      })}
+    </Stack>
+  );
+};
 export default ThreadCardList;
