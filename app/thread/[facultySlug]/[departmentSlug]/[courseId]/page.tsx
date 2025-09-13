@@ -68,7 +68,7 @@ export default async function CoursePage(props: {
         講義名講義名のスレッド
         <PostButton
           text="投稿する"
-          href={`/thread/${facultySlug}/${departmentSlug}/${courseId}/post`}
+          href={`${basePath}/post`}
         />
         {threads.length === 0 ? (
           <div style={{ padding: 8, color: "#666" }}>
