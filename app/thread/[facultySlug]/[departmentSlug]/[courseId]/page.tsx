@@ -18,6 +18,8 @@ type ThreadListItem = {
   author: { handle: string | null; displayName: string };
 };
 
+const BASE = process.env.APP_URL!.replace(/\/$/, "");
+
 async function getAllThreads(
   courseId: string,
   cookieHeader: string
