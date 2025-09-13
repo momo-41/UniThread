@@ -43,8 +43,8 @@ export default async function CoursePage(props: {
   // ← cookie を渡して二重取得を回避
   const threads = await getAllThreads(courseId, cookieHeader);
   const fromUrl = searchParams?.t ?? null;
-  // スレッドメッセージを表示する対象スレッド（とりあえず先頭）
-  const selected = threads[0] ?? null;
+  // 選択スレッド表示
+  const selected = threads.find((t) => t.id === fromUrl) ?? threads[0] ?? null;
   let initialItems: { id: string; userName: string; threadMessage: string }[] =
     [];
 
