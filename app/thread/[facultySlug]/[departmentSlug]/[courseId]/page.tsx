@@ -17,7 +17,6 @@ type ThreadListItem = {
   createdAt: string;
   author: { handle: string | null; displayName: string };
 };
-
 async function getAllThreads(
   courseId: string,
   cookieHeader: string
@@ -30,15 +29,19 @@ async function getAllThreads(
   return res.json();
 }
 
-export default async function CoursePage(props: { params: Params }) {
-  const { params } = await Promise.resolve(props);
-  const { facultySlug, departmentSlug, courseId } = params;
-
+export default async function CoursePage(props: {
+  params: Params | Promise<Params>;
+  searchParams: { t?: string };
+}) {
+   const resolved = await Promise.resolve(props.params);
+const { facultySlug, departmentSlug, courseId } = resolved;
+const { searchParams } = props;
   const cookieHeader = (await headers()).get("cookie") ?? "";
   // ← cookie を渡して二重取得を回避
   const threads = await getAllThreads(courseId, cookieHeader);
-  // スレッドメッセージを表示する対象スレッド（とりあえず先頭）
-  const selected = threads[0] ?? null;
+  const fromUrl = searchParams?.t ?? null;
+  // 選択スレッド表示
+  const selected = threads.find((t) => t.id === fromUrl) ?? threads[0] ?? null;
   let initialItems: { id: string; userName: string; threadMessage: string }[] =
     [];
 
@@ -57,26 +60,33 @@ export default async function CoursePage(props: { params: Params }) {
     }
   }
 
+   const basePath = `/thread/${facultySlug}/${departmentSlug}/${courseId}`;
+
   return (
     <Box display="flex" justifyContent="space-between">
       <Box>
         講義名講義名のスレッド
         <PostButton
           text="投稿する"
-          href={`/thread/${facultySlug}/${departmentSlug}/${courseId}/post`}
+          href={`${basePath}/post`}
         />
         {threads.length === 0 ? (
           <div style={{ padding: 8, color: "#666" }}>
             スレッドはまだありません
           </div>
         ) : (
-          <ThreadCardList items={threads} />
+         <ThreadCardList
+            items={threads}
+            selectedId={selected?.id ?? null}
+            basePath={basePath}
+          />
         )}
       </Box>
 
       {selected && (
         <Box my={2} mr={8}>
           <ThreadMessageView
+          key={selected.id}    
             threadId={selected.id}
             title={selected.title}
             initialItems={initialItems}
