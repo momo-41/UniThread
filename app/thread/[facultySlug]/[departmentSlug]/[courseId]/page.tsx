@@ -86,6 +86,7 @@ const { searchParams } = props;
       {selected && (
         <Box my={2} mr={8}>
           <ThreadMessageView
+          key={selected.id}    
             threadId={selected.id}
             title={selected.title}
             initialItems={initialItems}
