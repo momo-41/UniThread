@@ -30,12 +30,12 @@ async function getAllThreads(
 }
 
 export default async function CoursePage(props: {
-  params: Params;
+  params: Params | Promise<Params>;
   searchParams: { t?: string };
 }) {
-  const {  params, searchParams } = await Promise.resolve(props);
-  const { facultySlug, departmentSlug, courseId } = params;
-
+   const resolved = await Promise.resolve(props.params);
+const { facultySlug, departmentSlug, courseId } = resolved;
+const { searchParams } = props;
   const cookieHeader = (await headers()).get("cookie") ?? "";
   // ← cookie を渡して二重取得を回避
   const threads = await getAllThreads(courseId, cookieHeader);
@@ -75,7 +75,11 @@ export default async function CoursePage(props: {
             スレッドはまだありません
           </div>
         ) : (
-          <ThreadCardList items={threads} />
+         <ThreadCardList
+            items={threads}
+            selectedId={selected?.id ?? null}
+            basePath={basePath}
+          />
         )}
       </Box>
 
