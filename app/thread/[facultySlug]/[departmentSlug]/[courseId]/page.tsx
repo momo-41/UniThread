@@ -32,7 +32,10 @@ async function getAllThreads(
   return res.json();
 }
 
-export default async function CoursePage(props: { params: Params }) {
+export default async function CoursePage(props: {
+  params: Params;
+  searchParams: { t?: string };
+}) {
   const { params } = await Promise.resolve(props);
   const { facultySlug, departmentSlug, courseId } = params;
 
