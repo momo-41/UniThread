@@ -1,5 +1,6 @@
 import { Card, Box, Typography, Avatar } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
+import styles from "./ThreadCard.module.css";
 
 type ThreadCardProps = {
   title: string;
@@ -12,11 +13,12 @@ const ThreadCard: React.FC<ThreadCardProps> = ({
   title,
   authorName,
   createdAt,
+  active = false,
 }) => {
   const dateLabel = new Date(createdAt).toLocaleDateString("ja-JP"); // YYYY/MM/DD
 
   return (
-    <Card sx={{ width: 300, borderRadius: 3, display: "flex" }}>
+    <Card aria-current={active ? "true" : undefined} className={active ? styles.active : undefined}  sx={{ width: 300, borderRadius: 3, display: "flex" }}>
       <Box width={8} bgcolor="#D9D9D9" borderRadius="8px 0 0 8px" />
       <Box width="100%" p={1}>
         <Typography fontSize={17} fontWeight="bold" color="#444444">
