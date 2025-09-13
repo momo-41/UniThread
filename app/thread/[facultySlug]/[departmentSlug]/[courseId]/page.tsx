@@ -36,12 +36,13 @@ export default async function CoursePage(props: {
   params: Params;
   searchParams: { t?: string };
 }) {
-  const { params } = await Promise.resolve(props);
+  const {  params, searchParams } = await Promise.resolve(props);
   const { facultySlug, departmentSlug, courseId } = params;
 
   const cookieHeader = (await headers()).get("cookie") ?? "";
   // ← cookie を渡して二重取得を回避
   const threads = await getAllThreads(courseId, cookieHeader);
+  const fromUrl = searchParams?.t ?? null;
   // スレッドメッセージを表示する対象スレッド（とりあえず先頭）
   const selected = threads[0] ?? null;
   let initialItems: { id: string; userName: string; threadMessage: string }[] =
