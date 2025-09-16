@@ -23,7 +23,15 @@ const ThreadCard: React.FC<ThreadCardProps> = ({
 const dateLabel = new Date(createdAt).toLocaleDateString("ja-JP"); // YYYY/MM/DD
 const href = `${basePath}?t=${threadId}`;
   return (
-    <Card aria-current={active ? "true" : undefined} className={active ? styles.active : undefined}  sx={{ width: 300, borderRadius: 3, display: "flex" }}>
+    <Card aria-current={active ? "true" : undefined}
+      sx={{
+        width: 300,
+        borderRadius: 3,
+        display: "flex",
+        outline: active ? "2px solid" : "0",
+        outlineColor: active ? "primary.main" : "transparent",
+        outlineOffset: 0,
+      }}>
       <CardActionArea
         component={NextLink}     
         href={href}
