@@ -7,12 +7,14 @@ type ThreadCardProps = {
   authorName: string;
   createdAt: string;
   active?: boolean;
+  basePath: string;
 };
 
 const ThreadCard: React.FC<ThreadCardProps> = ({
   title,
   authorName,
   createdAt,
+  basePath,
   active = false,
 }) => {
   const dateLabel = new Date(createdAt).toLocaleDateString("ja-JP"); // YYYY/MM/DD
