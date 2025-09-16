@@ -22,9 +22,9 @@ const CourseCardList = ({
     <>
       <Typography
         fontWeight={550}
-        fontSize={20}
+        fontSize={{ xs: 16, md: 20 }}
         color="#383838"
-        ml={3}
+        ml={{ xs: 1.5, md: 3 }}
         my={1}
         sx={{ mb: 2 }}
       >
