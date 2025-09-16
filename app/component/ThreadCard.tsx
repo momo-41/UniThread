@@ -1,6 +1,5 @@
-import { Card, Box, Typography, Avatar, CardActionArea, Link } from "@mui/material";
+import { Card, Box, Typography, Avatar, CardActionArea} from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
-import styles from "./ThreadCard.module.css";
 import NextLink from "next/link"; 
 
 type ThreadCardProps = {
