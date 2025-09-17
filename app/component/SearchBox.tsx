@@ -5,7 +5,12 @@ const SearchBox = () => {
   return (
     <Box
       component="form"
-      sx={{ "& > :not(style)": { mt: 2, width: "50ch" } }}
+      sx={{
+        "& > :not(style)": {
+          mt: 2,
+          width: { xs: "300px", md: "400px" },
+        },
+      }}
       autoComplete="off"
       display={"flex"}
       justifyContent={"center"}
