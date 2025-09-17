@@ -8,7 +8,7 @@ const SearchBox = () => {
       sx={{
         "& > :not(style)": {
           mt: 2,
-          width: { xs: "40ch", md: "50ch" },
+          width: { xs: "300px", md: "400px" },
         },
       }}
       autoComplete="off"
