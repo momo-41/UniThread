@@ -1,6 +1,5 @@
 import { Stack } from "@mui/material";
 import ThreadCard from "./ThreadCard";
-import Link from "next/link";
 
 type ThreadCardListProps = {
   items: {
@@ -17,17 +16,16 @@ const ThreadCardList = ({ items, selectedId, basePath }: ThreadCardListProps) =>
   return (
            <Stack direction="column" spacing={2}>
       {items.map((t) => {
-        const href = `${basePath}?t=${t.id}`;
         const isActive = t.id === selectedId;
         return (
-          <Link key={t.id} href={href} replace scroll={false} style={{ textDecoration: "none" }}>
             <ThreadCard
+            key={t.id} 
+              threadId={t.id}  
               title={t.title}
               authorName={t.author.handle ?? t.author.displayName}
               createdAt={t.createdAt}
-              active={isActive}
-            />
-          </Link>
+              active={isActive} 
+              basePath={basePath}            />
         );
       })}
     </Stack>
