@@ -1,6 +1,6 @@
 import { Card, Box, Typography, Avatar, CardActionArea} from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
-import NextLink from "next/link"; 
+import Link from "next/link"; 
 
 type ThreadCardProps = {
   threadId: string;
@@ -32,7 +32,7 @@ const href = `${basePath}?t=${threadId}`;
         outlineOffset: 0,
       }}>
       <CardActionArea
-        component={NextLink}     
+        component={Link}     
         href={href}
         replace                 
         scroll={false}          
