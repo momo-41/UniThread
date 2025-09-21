@@ -39,7 +39,7 @@ const CourseCardList = ({
         <Grid container spacing={4} mx={8}>
           {courses.map((course) => (
             <Grid
-              size={4}
+              size={{ xs: 12, md: 4 }}
               key={course.id}
               display={"flex"}
               justifyContent={"center"}
