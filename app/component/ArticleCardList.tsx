@@ -14,10 +14,10 @@ const ArticleCardList = ({ items }: { items: ArticleItem[] }) => (
     <Box display={"flex"} justifyContent={"flex-end"} mr={5} my={3}>
       <PostButton text={"投稿する"} href={"/article/post"} />
     </Box>
-    <Grid container spacing={4} sx={{ mx: { xs: 2, sm: 8 } }}>
+    <Grid container spacing={4} sx={{ mx: { xs: 2, md: 8 } }}>
       {items.map(({ id, title, author }) => (
         <Grid
-          size={{ xs: 12, sm: 6 }}
+          size={{ xs: 12, md: 6 }}
           key={id}
           display={"flex"}
           justifyContent={"center"}
