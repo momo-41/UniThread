@@ -13,7 +13,7 @@ const DepartmentsCardList: React.FC<DepartmentsCardListProps> = ({
 
   return (
     <>
-      <Typography fontWeight={550} fontSize={18} color="#383838" ml={5} mt={3}>
+      <Typography fontWeight={550} fontSize={20} color="#383838" ml={3} mt={3}>
         {faculty.facultyName} の学科一覧
       </Typography>
       <Grid container spacing={2} m={2}>
