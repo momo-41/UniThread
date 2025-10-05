@@ -18,7 +18,7 @@ const FacultyCardList = () => {
       <Grid container spacing={2} m={2}>
         {FacultyDepartmentData.map((data) => (
           <Grid
-            size={2.4}
+            size={{md:2.4, xs:20}}
             display={"flex"}
             justifyContent={"center"}
             key={data.facultySlug}

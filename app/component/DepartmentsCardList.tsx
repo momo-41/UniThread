@@ -25,7 +25,7 @@ const DepartmentsCardList: React.FC<DepartmentsCardListProps> = ({
       <Grid container spacing={2} m={2}>
         {faculty.departments.map((dept) => (
           <Grid
-            size={2.4}
+            size={{ md: 2.4, xs: 20 }}
             key={dept.departmentSlug}
             display={"flex"}
             justifyContent={"center"}
