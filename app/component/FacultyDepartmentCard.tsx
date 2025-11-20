@@ -14,8 +14,8 @@ const FacultyDepartmentCard: React.FC<FacultyDepartmentCardProps> = ({
     <Link key={facultySlug} href={href} style={{ textDecoration: "none" }}>
       <Card
         sx={{
-          width: 220,
-          height: 180,
+          width: {md:220,xs:180},
+          height: {md:180,xs:75},
           transition: "0.3s",
           "&:hover": {
             background: "#DCF5F7",
@@ -23,7 +23,7 @@ const FacultyDepartmentCard: React.FC<FacultyDepartmentCardProps> = ({
         }}
       >
         <Typography
-          fontSize={19}
+          fontSize={{ md: 19, xs: 16 }}
           fontWeight={"bold"}
           color="#383838"
           ml={1.5}
