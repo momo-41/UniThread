@@ -6,7 +6,7 @@ import CourseSearchButton from "@/app/component/CourseSearchButton";
 import SearchBox from "@/app/component/SearchBox";
 
 type TProps = {
-  params: Promise<{ facultySlug: string; departmentSlug: string }>;
+  params: { facultySlug: string; departmentSlug: string };
 };
 
 async function getCourseData(facultySlug: string, departmentSlug: string) {
@@ -14,9 +14,9 @@ async function getCourseData(facultySlug: string, departmentSlug: string) {
 }
 
 export default async function CoursesPage({ params }: TProps) {
-  const { facultySlug, departmentSlug } = await params;
+  const { facultySlug, departmentSlug } = params;
 
-  // スラッグ(英語名)から日本語名へ変換している
+  // スラッグ(英語名)から日本語名へ変換
   const faculty = FacultyDepartmentData.find(
     (f) => f.facultySlug === facultySlug
   );
