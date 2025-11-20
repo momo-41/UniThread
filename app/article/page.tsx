@@ -1,17 +1,19 @@
 import ArticleCardList from "../component/ArticleCardList";
 import { headers } from "next/headers";
 
-async function getAllArticleposts() {
+async function getAllArticleposts(cookieHeader: string) {
   const response = await fetch(`${process.env.APP_URL!}/api/article`, {
     cache: "no-store",
-    headers: { cookie: (await headers()).get("cookie") ?? "" },
+    headers: { cookie: cookieHeader },
   });
   const allArticlePosts = await response.json();
   return allArticlePosts;
 }
 
 const ArticlePage = async () => {
-  const allArticlePosts = await getAllArticleposts();
+  const h = await headers();
+  const cookieHeader = h.get("cookie") ?? "";
+  const allArticlePosts = await getAllArticleposts(cookieHeader);
 
   return (
     <div>
