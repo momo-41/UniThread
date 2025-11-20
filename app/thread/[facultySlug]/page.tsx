@@ -4,8 +4,8 @@ import SearchBox from "@/app/component/SearchBox";
 
 type TParams = { facultySlug: string };
 
-const FacultyPage = async ({ params }: { params: Promise<TParams> }) => {
-  const { facultySlug } = await params;
+const FacultyPage = async ({ params }: { params: TParams }) => {
+  const { facultySlug } = params;
 
   return (
     <div>
