@@ -11,13 +11,13 @@ async function getArticleDetailData(id: string, cookieHeader: string) {
   return articleDetailData;
 }
 
-type TProps = { params: { articleId: string } };
+type TProps = { params: { articleid: string } };
 
 export default async function ArticleDetailPage({ params }: TProps) {
-  const { articleId } = params;
+  const { articleid } = params;
   const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
-  const articleDetail = await getArticleDetailData(articleId, cookieHeader);
+  const articleDetail = await getArticleDetailData(articleid, cookieHeader);
 
   return (
     <ArticleDetail
