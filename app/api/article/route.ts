@@ -48,4 +48,3 @@ export async function POST(req: Request) {
 
   return NextResponse.json(article, { status: 201 });
 }
-// fail名変更用
