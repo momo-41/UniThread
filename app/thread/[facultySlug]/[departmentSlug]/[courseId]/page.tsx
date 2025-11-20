@@ -17,6 +17,11 @@ type ThreadListItem = {
   createdAt: string;
   author: { handle: string | null; displayName: string };
 };
+type ThreadMessageItem = {
+  id: string;
+  userName: string;
+  threadMessage: string;
+};
 async function getAllThreads(
   courseId: string,
   cookieHeader: string
@@ -26,40 +31,59 @@ async function getAllThreads(
     { cache: "no-store", headers: { cookie: cookieHeader } }
   );
   if (!res.ok) return [];
-  return res.json();
+
+  const data = (await res.json()) as ThreadListItem[];
+  return data;
+}
+
+async function getThreadMessages(
+  threadId: string,
+  cookieHeader: string
+): Promise<ThreadMessageItem[]> {
+  const res = await fetch(
+    `${process.env.APP_URL!}/api/threads/${threadId}/messages`,
+    { cache: "no-store", headers: { cookie: cookieHeader } }
+  );
+
+  if (!res.ok) return [];
+
+  const data = await res.json();
+
+  return (data.messages ?? []).map((m: any) => ({
+    id: m.id,
+    userName: m.author?.handle ?? m.author?.displayName ?? "名無し",
+    threadMessage: m.body,
+  }));
 }
 
 export default async function CoursePage(props: {
-  params: Params | Promise<Params>;
+  params: Params;
   searchParams: { t?: string };
 }) {
-   const resolved = await Promise.resolve(props.params);
-const { facultySlug, departmentSlug, courseId } = resolved;
-const { searchParams } = props;
-  const cookieHeader = (await headers()).get("cookie") ?? "";
-  // ← cookie を渡して二重取得を回避
-  const threads = await getAllThreads(courseId, cookieHeader);
-  const fromUrl = searchParams?.t ?? null;
-  // 選択スレッド表示
-  const selected = threads.find((t) => t.id === fromUrl) ?? threads[0] ?? null;
-  let initialItems: { id: string; userName: string; threadMessage: string }[] =
-    [];
+  const { params, searchParams } = props;
+  const { facultySlug, departmentSlug, courseId } = params;
+const h = await headers();
+const cookieHeader = h.get("cookie") ?? "";
+const fromUrl = searchParams?.t ?? null;
+const threadsPromise = getAllThreads(courseId, cookieHeader);
+const initialFromUrlMessagesPromise = fromUrl
+  ? getThreadMessages(fromUrl, cookieHeader)
+  : Promise.resolve<ThreadMessageItem[]>([]);
 
-  if (selected) {
-    const res = await fetch(
-      `${process.env.APP_URL!}/api/threads/${selected.id}/messages`,
-      { cache: "no-store", headers: { cookie: cookieHeader } }
-    );
-    if (res.ok) {
-      const data = await res.json();
-      initialItems = (data.messages ?? []).map((m: any) => ({
-        id: m.id,
-        userName: m.author?.handle ?? m.author?.displayName ?? "名無し",
-        threadMessage: m.body,
-      }));
-    }
+const threads = await threadsPromise;
+
+const selected =
+  threads.find((t) => t.id === fromUrl) ?? threads[0] ?? null;
+
+let initialItems: ThreadMessageItem[] = [];
+
+if (selected) {
+  if (fromUrl && fromUrl === selected.id) {
+    initialItems = await initialFromUrlMessagesPromise;
+  } else {
+    initialItems = await getThreadMessages(selected.id, cookieHeader);
   }
-
+}
    const basePath = `/thread/${facultySlug}/${departmentSlug}/${courseId}`;
 
   return (
@@ -82,7 +106,6 @@ const { searchParams } = props;
           />
         )}
       </Box>
-
       {selected && (
         <Box my={2} mr={8}>
           <ThreadMessageView
